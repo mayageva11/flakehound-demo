@@ -57,10 +57,11 @@ jobs:
 
       - name: Run the Flaky Shop suite against the live site
         # Failures are expected — they are the data. Never fail the job here.
-        # SHOP_URL (a repo variable) points at the Vercel deployment; if it is
-        # unset, playwright.config.ts boots a local static server instead.
+        # SHOP_URL defaults to the GitHub Pages-hosted shop; override it with a
+        # repo Variable if you fork/rename. If it resolves empty,
+        # playwright.config.ts boots a local static server in the runner instead.
         env:
-          SHOP_URL: ${{ vars.SHOP_URL }}
+          SHOP_URL: ${{ vars.SHOP_URL || 'https://mayageva11.github.io/flakehound-demo/shop/' }}
           JUNIT_OUTPUT: ${{ steps.run.outputs.dir }}/junit.xml
         run: npx playwright test || true
 

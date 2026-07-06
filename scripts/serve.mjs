@@ -1,12 +1,13 @@
-// Minimal static file server for app/ — used locally by Playwright's webServer.
-// Zero dependencies on purpose (the demo stays lightweight).
+// Minimal static file server for the shop (docs/shop) — used locally by
+// Playwright's webServer. Zero dependencies on purpose (the demo stays light).
+// In production the same files are served by GitHub Pages at /shop/.
 import { createServer } from 'node:http';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const port = Number(process.argv[2] ?? 4173);
-const root = path.resolve(fileURLToPath(new URL('../app', import.meta.url)));
+const root = path.resolve(fileURLToPath(new URL('../docs/shop', import.meta.url)));
 
 const TYPES = {
   '.html': 'text/html; charset=utf-8',

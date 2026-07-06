@@ -25,6 +25,13 @@ what flakehound recovers from the seed — `receipt` broke deterministically
 (regression, since `5eed002`), while `checkout` and `payment` began flipping
 (flaky).
 
+The `2026-07-04` run's `checkout` is a **retry flip** (attempt 1 times out,
+attempt 2 passes in the same run — two `<testcase>` entries). That is
+flakehound's highest-confidence flaky signal, so `checkout` reads as
+flaky/**high** and `payment` as flaky/**medium** from the seed alone. It's seed
+backstory like everything else here; real CI runs (`retries: 2`) add genuine
+retry flips over time.
+
 The seed is **generated**, not fabricated by hand file-by-file — see
 [`../scripts/seed-history.mjs`](../scripts/seed-history.mjs), which documents the
 backstory as data. Every seed run carries the same test ids and trace shapes the

@@ -23,14 +23,20 @@ const historyDir = path.resolve(fileURLToPath(new URL('../history', import.meta.
 
 const P = 'pass';
 const F = 'fail';
+const RF = 'retryflip'; // failed then passed WITHIN one run (two attempts) → retry flip
 
 // chronological backstory: [date, commitSha, { test: verdict }]
+// The 2026-07-04 checkout is a retry flip: attempt 1 times out, attempt 2 passes
+// in the same run. That is flakehound's highest-confidence flaky signal — it
+// makes `checkout` classify as flaky/HIGH from the seed alone, so the dashboard
+// shows a high-confidence chip immediately. Real CI runs (retries: 2) add more
+// of these over time; this is seed backstory, same as every other seed run.
 const RUNS = [
   ['2026-06-30T10:00:00Z', '5eed001', { login: P, checkout: P, payment: P, receipt: P }],
   ['2026-07-01T10:00:00Z', '5eed001', { login: P, checkout: P, payment: P, receipt: P }],
   ['2026-07-02T10:00:00Z', '5eed002', { login: P, checkout: P, payment: F, receipt: F }],
   ['2026-07-03T10:00:00Z', '5eed002', { login: P, checkout: F, payment: P, receipt: F }],
-  ['2026-07-04T10:00:00Z', '5eed002', { login: P, checkout: P, payment: F, receipt: F }],
+  ['2026-07-04T10:00:00Z', '5eed002', { login: P, checkout: RF, payment: F, receipt: F }],
 ];
 
 const CI = '/home/runner/work/flakehound-demo/flakehound-demo';
@@ -68,25 +74,38 @@ const attr = (s) =>
   s.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
 const text = (s) => s.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
 
-function testcaseXml(name, verdict, lineSalt) {
-  const open = `    <testcase name="${name}" classname="shop.spec.ts" time="${DURATION[name]}"`;
-  if (verdict === P) return `${open}/>`;
+function passCase(name, timeSec = DURATION[name]) {
+  return `    <testcase name="${name}" classname="shop.spec.ts" time="${timeSec}"/>`;
+}
+
+function failCase(name, lineSalt) {
   const f = FAILURE[name];
   // vary the line number per run so normalization (:<N>) is exercised
   return (
-    `${open}>\n` +
+    `    <testcase name="${name}" classname="shop.spec.ts" time="${DURATION[name]}">\n` +
     `      <failure message="${attr(f.message)}">${text(f.stack(30 + lineSalt))}</failure>\n` +
     `    </testcase>`
   );
 }
 
+// Returns one or more <testcase> strings for a test in a run. A retry flip emits
+// TWO: a failed first attempt and a passing second attempt (same name), which
+// flakehound groups into one execution → an intra-run retry flip.
+function testcaseXml(name, verdict, lineSalt) {
+  if (verdict === P) return [passCase(name)];
+  if (verdict === F) return [failCase(name, lineSalt)];
+  // RF: fail-then-pass within the run
+  return [failCase(name, lineSalt), passCase(name, '3.000')];
+}
+
 function runXml(verdicts, lineSalt) {
-  const failures = ORDER.filter((t) => verdicts[t] === F).length;
-  const body = ORDER.map((t) => testcaseXml(t, verdicts[t], lineSalt)).join('\n');
+  const cases = ORDER.flatMap((t) => testcaseXml(t, verdicts[t], lineSalt));
+  const failures = cases.filter((c) => c.includes('<failure')).length;
+  const body = cases.join('\n');
   return (
     `<?xml version="1.0" encoding="UTF-8"?>\n` +
     `<testsuites>\n` +
-    `  <testsuite name="shop.spec.ts" tests="${ORDER.length}" failures="${failures}" time="23.300">\n` +
+    `  <testsuite name="shop.spec.ts" tests="${cases.length}" failures="${failures}" time="23.300">\n` +
     `${body}\n` +
     `  </testsuite>\n` +
     `</testsuites>\n`

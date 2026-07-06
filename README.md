@@ -4,8 +4,11 @@ A **living demo** for [flakehound](https://github.com/mayageva11/flakehound): a
 real website with bugs planted *on purpose*, a Playwright suite that exposes
 them, and a scheduled pipeline that clusters the failures into a dashboard.
 
-**Live dashboard:** _set after you deploy — GitHub Pages `/docs`_
-**The shop:** _set after you deploy — Vercel_
+**Live dashboard:** https://mayageva11.github.io/flakehound-demo/
+**The shop:** https://mayageva11.github.io/flakehound-demo/shop/
+
+_Both are served from one GitHub Pages deployment (`main` → `/docs`): the dashboard
+at the root, the shop from `docs/shop/`._
 
 > ### Honest framing — read this first
 > The flakiness in this demo is **seeded on purpose for demonstration**. The
@@ -25,8 +28,8 @@ scheduled dashboard stays free to run forever.
 
 ### 1 · The Flaky Shop — a real site with defects planted in the app
 
-A tiny `login → checkout → payment` storefront (static, deployed on Vercel).
-Three defects are planted in the **application code** (`app/js/shop.js`), each
+A tiny `login → checkout → payment` storefront (static, served from GitHub Pages
+at `/shop/`). Three defects are planted in the **application code** (`docs/shop/js/shop.js`), each
 tagged `PLANTED DEFECT` in a comment:
 
 | # | Defect | Where | Surfaces as |
@@ -46,10 +49,17 @@ defects. Over repeated runs on the same commit:
 
 ```
 login    → stable
-checkout → flaky       (defect 1, intermittent timeout)
-payment  → flaky       (defect 2, intermittent pricing race)
-receipt  → regression  (defect 3, deterministic wrong total)
+checkout → flaky (high)    (defect 1, intermittent timeout)
+payment  → flaky (medium)  (defect 2, intermittent pricing race)
+receipt  → regression      (defect 3, deterministic wrong total)
 ```
+
+**Retries in CI** (`retries: 2`) are deliberate: when a flaky test fails then
+passes *within one run*, that intra-run retry flip is flakehound's
+**highest-confidence** signal — so `checkout` reads as flaky/**high**, distinct
+from `payment`'s cross-run flaky/**medium**. The suite emits one `<testcase>` per
+attempt, so a retry flip appears as two same-named `<testcase>` entries in one
+file (the shape flakehound already unit-tests in `playwright-retries.xml`).
 
 A small deterministic reporter (`tests/junit-reporter.ts`) pins the JUnit shape
 so a test's id is byte-identical across every run — that stability is what lets
@@ -80,7 +90,7 @@ is the goal) and fails only on exit 2 (a real tool error).
 ```sh
 npm install
 npm run test:install     # one-time: Playwright's chromium
-npm test                 # boots a local static server for app/ and runs the suite
+npm test                 # boots a local static server for docs/shop and runs the suite
 npm run analyze          # clusters history/ → docs/flakehound.report.json
 ```
 
@@ -93,17 +103,22 @@ Because defects 1 and 2 are timing-based, a single local run is a coin toss —
 run `npm test` a handful of times and watch `checkout`/`payment` flip while
 `receipt` fails every time.
 
-## Deploy
+## Deploy — one GitHub Pages site, no Vercel
 
-- **The shop (Vercel):** import the repo, set the **Root Directory** to `app`,
-  framework preset **Other**. It's static — no build step. Then set a repo
-  variable `SHOP_URL` to the deployment URL so the workflow tests the live site.
-  (If `SHOP_URL` is unset, the workflow boots a local server in the runner
-  instead, so the pipeline still works out of the box.)
-- **The dashboard (GitHub Pages):** Settings → Pages → *Deploy from a branch*,
-  branch `main`, folder `/docs`.
-- **Trigger a run:** Actions → *flakehound* → *Run workflow* (that's the
+Both the dashboard and the shop are served from a single Pages deployment.
+
+- **Enable Pages:** Settings → Pages → *Deploy from a branch*, branch `main`,
+  folder `/docs`. That publishes the dashboard at the repo-root URL and the shop
+  at `/shop/` (from `docs/shop/`).
+- **Point the pipeline at the live shop:** the workflow defaults `SHOP_URL` to
+  `https://mayageva11.github.io/flakehound-demo/shop/`, so no repo setting is
+  needed. (Override with a repo **Variable** `SHOP_URL` if you fork/rename; if it
+  resolves empty, the workflow boots a local server in the runner instead.)
+- **Trigger a run:** Actions → *flakehound* → *Run workflow* (the
   `workflow_dispatch` button — handy for live demos).
+
+> After the first push, wait ~1 min for Pages to publish the shop under `/shop/`
+> **before** triggering a run, so the suite has a live site to test.
 
 ## What's honest about this, precisely
 
@@ -120,11 +135,12 @@ run `npm test` a handful of times and watch `checkout`/`payment` flip while
 ## Layout
 
 ```
-app/                 the Flaky Shop (static site; defects in app/js/shop.js)
+docs/                served by GitHub Pages
+  index.html           the dashboard + the report it renders (repo-root URL)
+  shop/                the Flaky Shop (static site; defects in shop/js/shop.js) → /shop/
 tests/               Playwright suite + page objects + deterministic JUnit reporter
 scripts/             static server, seed generator, analyze wrapper
 history/             run history (seed backstory + real runs) — flakehound's input
-docs/                the dashboard + the report it renders
 .github/workflows/   the scheduled + on-demand pipeline
 ```
 

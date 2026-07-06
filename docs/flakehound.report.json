@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "generatedAt": "2026-07-06T20:05:30.507Z",
+  "generatedAt": "2026-07-06T22:45:36.554Z",
   "summary": {
-    "filesParsed": 6,
-    "testRuns": 24,
+    "filesParsed": 5,
+    "testRuns": 21,
     "metadataSources": {
       "sidecar": 6,
       "dirname": 0,
@@ -14,10 +14,10 @@
   "signals": [
     {
       "testId": "shop.spec.ts > checkout",
-      "flakinessScore": 0.6666666666666666,
+      "flakinessScore": 1,
       "classification": "flaky",
-      "confidence": "medium",
-      "reason": "2 pass↔fail transition(s) on the same commit"
+      "confidence": "high",
+      "reason": "1 retry flip(s) within a single run; 2 pass↔fail transition(s) on the same commit"
     },
     {
       "testId": "shop.spec.ts > login",
@@ -82,8 +82,8 @@
         "shop.spec.ts > checkout"
       ],
       "firstSeen": "2026-07-03T10:00:00.000Z",
-      "lastSeen": "2026-07-03T10:00:00.000Z",
-      "occurrences": 1
+      "lastSeen": "2026-07-04T10:00:00.000Z",
+      "occurrences": 2
     }
   ],
   "gate": {

@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="shop.spec.ts" tests="4" failures="2" time="23.300">
+  <testsuite name="shop.spec.ts" tests="5" failures="3" time="23.300">
     <testcase name="login" classname="shop.spec.ts" time="0.700"/>
-    <testcase name="checkout" classname="shop.spec.ts" time="20.000"/>
+    <testcase name="checkout" classname="shop.spec.ts" time="20.000">
+      <failure message="TimeoutError: Timeout 20000ms exceeded waiting for locator('#pay-button')">TimeoutError: Timeout 20000ms exceeded waiting for locator('#pay-button')
+    at CheckoutPage.pay (/home/runner/work/flakehound-demo/flakehound-demo/tests/pages/checkout-page.ts:34:13)
+    at /home/runner/work/flakehound-demo/flakehound-demo/tests/shop.spec.ts:34:18</failure>
+    </testcase>
+    <testcase name="checkout" classname="shop.spec.ts" time="3.000"/>
     <testcase name="payment" classname="shop.spec.ts" time="1.200">
       <failure message="AssertionError: expected cart total to equal charged amount">AssertionError: expected cart total to equal charged amount
     at PaymentPage.verify (/home/runner/work/flakehound-demo/flakehound-demo/tests/pages/payment-page.ts:34:13)

@@ -137,6 +137,28 @@
   .how code { font-family: var(--mono); color: var(--cyan); font-size: 12.5px; }
   .how .honest { margin: 14px 0 0; padding: 12px 14px; border-left: 3px solid var(--line); background: rgba(7, 9, 15, 0.45); border-radius: 0 10px 10px 0; color: var(--dim); font-size: 12.5px; }
 
+  /* ── planted-defects annotation ─────────────────────── */
+  .annot { margin-top: 26px; }
+  .annot .note { color: var(--dim); font-size: 12.5px; margin: 0 0 14px; }
+  .annot-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  @media (max-width: 820px) { .annot-grid { grid-template-columns: 1fr; } }
+  .annot-card { border: 1px solid var(--line); border-radius: 10px; padding: 13px 14px; background: rgba(7, 9, 15, 0.45); border-top: 3px solid var(--line); }
+  .annot-card.timeout { border-top-color: var(--amber); }
+  .annot-card.race { border-top-color: var(--pink); }
+  .annot-card.regression { border-top-color: var(--red); }
+  .annot-card .cat { font-size: 13.5px; font-weight: 700; }
+  .annot-card.timeout .cat { color: var(--amber); }
+  .annot-card.race .cat { color: var(--pink); }
+  .annot-card.regression .cat { color: var(--red); }
+  .annot-card .tid { font-family: var(--mono); font-size: 12px; color: var(--text); margin-top: 5px; }
+  .annot-card .blurb { color: var(--dim); font-size: 12px; margin-top: 6px; }
+  .annot-card .outcome { margin-top: 8px; }
+  .cat-chip { display: inline-block; font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.4px; border: 1px solid var(--line); border-radius: 20px; padding: 1px 8px; color: var(--dim); vertical-align: middle; }
+  .cat-chip.timeout { color: var(--amber); border-color: rgba(251,191,36,.4); }
+  .cat-chip.race { color: var(--pink); border-color: rgba(244,114,182,.4); }
+  .cat-chip.regression { color: var(--red); border-color: rgba(251,113,133,.4); }
+  .demo-tag { font-size: 9.5px; color: var(--dim); font-family: var(--mono); letter-spacing: 0.5px; text-transform: uppercase; opacity: 0.8; }
+
   footer { margin-top: 40px; text-align: center; color: var(--dim); font-size: 12.5px; }
   footer a { color: var(--cyan); text-decoration: none; }
 </style>
@@ -204,7 +226,7 @@ const FALLBACK_REPORT = {
   "generatedAt": "2026-07-06T10:00:00.000Z",
   "summary": { "filesParsed": 5, "testRuns": 20, "metadataSources": { "sidecar": 5, "dirname": 0, "mtime": 0 }, "testsAnalyzed": 4 },
   "signals": [
-    { "testId": "shop.spec.ts > checkout", "flakinessScore": 0.67, "classification": "flaky", "confidence": "medium", "reason": "2 pass↔fail transition(s) on the same commit" },
+    { "testId": "shop.spec.ts > checkout", "flakinessScore": 1, "classification": "flaky", "confidence": "high", "reason": "1 retry flip(s) within a single run; 2 pass↔fail transition(s) on the same commit" },
     { "testId": "shop.spec.ts > login", "flakinessScore": 0, "classification": "stable", "confidence": "high" },
     { "testId": "shop.spec.ts > payment", "flakinessScore": 0.67, "classification": "flaky", "confidence": "medium", "reason": "2 pass↔fail transition(s) on the same commit" },
     { "testId": "shop.spec.ts > receipt", "flakinessScore": 0, "classification": "regression", "confidence": "high", "reason": "failing in 100% of the last 3 run(s) since commit 5eed002; passed before it", "brokenSinceSha": "5eed002" }
@@ -217,7 +239,23 @@ const FALLBACK_REPORT = {
   "gate": { "baselineUsed": false, "newRegressions": ["shop.spec.ts > receipt"], "knownRegressions": [], "resolvedRegressions": [] }
 };
 
+/* Hand-written DEMO ANNOTATION: which planted defect each test exercises. These
+   category names are authored for this demo — flakehound clusters by stack trace
+   and, running --no-ai, does not label root cause. The classifications shown
+   (flaky/regression + confidence) are read live from the report, not hard-coded. */
+const DEMO_ANNOTATIONS = {
+  'shop.spec.ts > checkout': { kind: 'timeout', category: 'Timeout flake', blurb: 'Pay button renders after a random 0–35s delay; a fixed render SLA sometimes elapses first.' },
+  'shop.spec.ts > payment':  { kind: 'race', category: 'Race-condition flake', blurb: 'Cart total reads shared pricing state that an async promo races; it occasionally disagrees with the charge.' },
+  'shop.spec.ts > receipt':  { kind: 'regression', category: 'Regression', blurb: 'Receipt total always uses list prices, ignoring the promo — wrong every run.' },
+};
+
 const esc = (s) => String(s).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
+
+/* Small category chip for a test's card, from the demo annotation (or '' if none). */
+function catChip(testId) {
+  const a = DEMO_ANNOTATIONS[testId];
+  return a ? `<span class="cat-chip ${a.kind}">${esc(a.category)}</span>` : '';
+}
 const day = (iso) => iso.slice(0, 10);
 
 function relTime(iso) {
@@ -301,13 +339,37 @@ function render(report, source, lastRun) {
       </div>`);
   }
 
+  // Three planted defects, three flakehound outcomes — the classification chip on
+  // each card is read live from the report (not hard-coded).
+  const outcomeOf = (testId) => {
+    const s = signals.find((x) => x.testId === testId);
+    if (!s) return '—';
+    if (s.classification === 'regression') return 'regression';
+    if (s.classification === 'flaky') return `flaky · ${s.confidence}`;
+    return s.classification;
+  };
+  parts.push(`
+    <section class="panel annot">
+      <h2><span class="dot" style="background:var(--blue);box-shadow:0 0 8px var(--blue)"></span>Planted defects — demo annotation</h2>
+      <p class="note">The three bugs planted in the shop and how flakehound classified each. Category names are a hand-written demo annotation; the outcome chips are read live from the report.</p>
+      <div class="annot-grid">
+        ${Object.entries(DEMO_ANNOTATIONS).map(([testId, a]) => `
+          <div class="annot-card ${a.kind}">
+            <div class="cat">${esc(a.category)} <span class="demo-tag">demo</span></div>
+            <div class="tid">${esc(testId)}</div>
+            <div class="blurb">${esc(a.blurb)}</div>
+            <div class="outcome"><span class="cat-chip ${a.kind}">${esc(outcomeOf(testId))}</span></div>
+          </div>`).join('')}
+      </div>
+    </section>`);
+
   parts.push(`
     <div class="grid">
       <section class="panel">
         <h2><span class="dot" style="background:var(--red);box-shadow:0 0 8px var(--red)"></span>Regressions (${regressions.length})</h2>
         ${regressions.length === 0 ? '<div class="empty good">✓ no regressions</div>' : regressions.map((s) => `
           <div class="card reg">
-            <div class="tid">${esc(s.testId)}</div>
+            <div class="tid">${esc(s.testId)} ${catChip(s.testId)}</div>
             <div class="since">broken since ${esc(s.brokenSinceSha ?? '?')}</div>
             ${s.reason ? `<div class="reason">${esc(s.reason)}</div>` : ''}
           </div>`).join('')}
@@ -316,7 +378,7 @@ function render(report, source, lastRun) {
         <h2><span class="dot" style="background:var(--amber);box-shadow:0 0 8px var(--amber)"></span>Flaky — quarantine candidates (${flaky.length})</h2>
         ${flaky.length === 0 ? '<div class="empty good">✓ no flaky tests</div>' : flaky.map((s) => `
           <div class="card flk">
-            <div class="tid">${esc(s.testId)} <span class="chip ${esc(s.confidence)}">${esc(s.confidence)}</span></div>
+            <div class="tid">${esc(s.testId)} <span class="chip ${esc(s.confidence)}">${esc(s.confidence)}</span> ${catChip(s.testId)}</div>
             <div class="scorebar">
               <div class="track"><div class="fill" style="width:${Math.round(s.flakinessScore * 100)}%"></div></div>
               <div class="val">${s.flakinessScore.toFixed(2)}</div>

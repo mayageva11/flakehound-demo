@@ -15,6 +15,12 @@ import type { Reporter, TestCase, TestResult } from '@playwright/test/reporter';
  * `shop.spec.ts > payment`.
  *
  * Output path: $JUNIT_OUTPUT (default test-results/junit.xml).
+ *
+ * Retries: Playwright calls onTestEnd once PER ATTEMPT (each retry included), so
+ * pushing one <testcase> per call naturally emits every attempt. A flaky test
+ * that fails then passes within a run produces two <testcase> entries with the
+ * same name in one file — exactly the shape flakehound reads as an intra-run
+ * retry flip (→ high-confidence flaky).
  */
 export default class SimpleJUnitReporter implements Reporter {
   private readonly cases: { name: string; timeSec: number; failure?: { message: string; stack: string } }[] = [];
