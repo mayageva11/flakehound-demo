@@ -237,9 +237,9 @@ const FALLBACK_REPORT = {
     { "testId": "shop.spec.ts > receipt", "flakinessScore": 0, "classification": "regression", "confidence": "high", "reason": "failing in 100% of the last 3 run(s) since commit 5eed002; passed before it", "brokenSinceSha": "5eed002" }
   ],
   "clusters": [
-    { "id": "3b3af73dc648", "representativeTrace": "AssertionError: expected receipt total to equal amount charged at ReceiptPage.verifyTotal (receipt-page.ts:<N>:<N>) at shop.spec.ts:<N>:<N>", "tests": ["shop.spec.ts > receipt"], "firstSeen": "2026-07-02T10:00:00.000Z", "lastSeen": "2026-07-04T10:00:00.000Z", "occurrences": 3 },
-    { "id": "1c30043e05a6", "representativeTrace": "AssertionError: expected cart total to equal charged amount at PaymentPage.verify (payment-page.ts:<N>:<N>) at shop.spec.ts:<N>:<N>", "tests": ["shop.spec.ts > payment"], "firstSeen": "2026-07-02T10:00:00.000Z", "lastSeen": "2026-07-04T10:00:00.000Z", "occurrences": 2 },
-    { "id": "842e18d0a516", "representativeTrace": "TimeoutError: Timeout <DURATION> exceeded waiting for locator('#pay-button') at CheckoutPage.pay (checkout-page.ts:<N>:<N>) at shop.spec.ts:<N>:<N>", "tests": ["shop.spec.ts > checkout"], "firstSeen": "2026-07-03T10:00:00.000Z", "lastSeen": "2026-07-03T10:00:00.000Z", "occurrences": 1 }
+    { "id": "3b3af73dc648", "representativeTrace": "AssertionError: expected receipt total to equal amount charged at ReceiptPage.verifyTotal (receipt-page.ts:<N>:<N>) at shop.spec.ts:<N>:<N>", "tests": ["shop.spec.ts > receipt"], "firstSeen": "2026-07-02T10:00:00.000Z", "lastSeen": "2026-07-04T10:00:00.000Z", "occurrences": 3, "hypothesis": { "category": "assertion", "explanation": "The expected receipt total and amount charged are not equal due to a mismatch in the calculation logic." } },
+    { "id": "1c30043e05a6", "representativeTrace": "AssertionError: expected cart total to equal charged amount at PaymentPage.verify (payment-page.ts:<N>:<N>) at shop.spec.ts:<N>:<N>", "tests": ["shop.spec.ts > payment"], "firstSeen": "2026-07-02T10:00:00.000Z", "lastSeen": "2026-07-04T10:00:00.000Z", "occurrences": 2, "hypothesis": { "category": "assertion", "explanation": "The cart total was not correctly updated relative to the charged amount under concurrent updates." } },
+    { "id": "842e18d0a516", "representativeTrace": "TimeoutError: Timeout <DURATION> exceeded waiting for locator('#pay-button') at CheckoutPage.pay (checkout-page.ts:<N>:<N>) at shop.spec.ts:<N>:<N>", "tests": ["shop.spec.ts > checkout"], "firstSeen": "2026-07-03T10:00:00.000Z", "lastSeen": "2026-07-03T10:00:00.000Z", "occurrences": 1, "hypothesis": { "category": "timeout", "explanation": "The test waits too long for the #pay-button locator to appear on the checkout page." } }
   ],
   "gate": { "baselineUsed": false, "newRegressions": ["shop.spec.ts > receipt"], "knownRegressions": [], "resolvedRegressions": [] }
 };
@@ -412,7 +412,7 @@ function render(report, source, lastRun) {
             <span class="rank">#${i + 1}</span>
             <span class="head">${esc(headOf(c.representativeTrace))}</span>
             <span class="occ">${c.occurrences}× · ${c.tests.length} test${c.tests.length > 1 ? 's' : ''}</span>
-            ${c.hypothesis ? '<span class="ai-badge">AI</span>' : ''}
+            ${c.hypothesis ? `<span class="ai-badge" style="color:${CATEGORY_COLORS[c.hypothesis.category] ?? 'var(--cyan)'};border-color:${CATEGORY_COLORS[c.hypothesis.category] ?? 'var(--cyan)'}">🤖 AI · ${esc(c.hypothesis.category)}</span>` : ''}
             <span class="cid">${esc(c.id)}</span>
           </summary>
           <div class="body">
