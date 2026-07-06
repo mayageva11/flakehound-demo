@@ -1,0 +1,19 @@
+{
+  "name": "flakehound-demo",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "The Flaky Shop — a live demo for flakehound: a real site with intentionally-planted timing bugs, a Playwright suite that exposes them, and a scheduled pipeline that clusters the failures.",
+  "license": "MIT",
+  "scripts": {
+    "serve": "node scripts/serve.mjs 4173",
+    "test": "playwright test",
+    "test:install": "playwright install --with-deps chromium",
+    "analyze": "node scripts/analyze.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.0",
+    "@types/node": "^22.15.0",
+    "typescript": "^5.8.3"
+  }
+}

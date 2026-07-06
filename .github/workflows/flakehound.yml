@@ -1,0 +1,93 @@
+name: flakehound
+
+# Runs the Flaky Shop suite on a schedule (and on demand), appends the run to
+# the history, re-analyzes the whole history with flakehound, and republishes
+# the dashboard. The report is persisted by committing it back to the repo, so
+# each run's report becomes the next run's --baseline.
+on:
+  schedule:
+    - cron: '0 */6 * * *' # every 6 hours
+  workflow_dispatch: {} # manual trigger — for live demos
+
+# Never let two runs push at once; queue instead of cancel so no run is lost.
+concurrency:
+  group: flakehound-history
+  cancel-in-progress: false
+
+permissions:
+  contents: write # commit history + refreshed report back to the repo
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout (full history so we can commit)
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps chromium
+
+      - name: Prepare history folder for this run
+        id: run
+        run: |
+          TS="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          SAFE_TS="$(date -u +%Y-%m-%dT%H-%M-%SZ)"
+          SHORT_SHA="${GITHUB_SHA::7}"
+          DIR="history/${SHORT_SHA}_${SAFE_TS}"
+          mkdir -p "$DIR"
+          echo "timestamp=$TS" >> "$GITHUB_OUTPUT"
+          echo "dir=$DIR" >> "$GITHUB_OUTPUT"
+          # Metadata sidecar — the best rung of flakehound's resolution chain.
+          cat > "$DIR/junit.meta.json" <<JSON
+          {
+            "commitSha": "${GITHUB_SHA}",
+            "timestamp": "${TS}",
+            "runnerId": "${RUNNER_NAME}"
+          }
+          JSON
+
+      - name: Run the Flaky Shop suite against the live site
+        # Failures are expected — they are the data. Never fail the job here.
+        # SHOP_URL (a repo variable) points at the Vercel deployment; if it is
+        # unset, playwright.config.ts boots a local static server instead.
+        env:
+          SHOP_URL: ${{ vars.SHOP_URL }}
+          JUNIT_OUTPUT: ${{ steps.run.outputs.dir }}/junit.xml
+        run: npx playwright test || true
+
+      - name: Analyze the accumulated history with flakehound (--no-ai)
+        # Exit 1 (a new regression was found) is informational for this demo —
+        # surfacing it on the dashboard is the whole point. Fail only on exit 2
+        # (a genuine tool error).
+        run: |
+          set +e
+          npm run analyze
+          rc=$?
+          if [ "$rc" -eq 2 ]; then exit 2; fi
+          echo "flakehound exit code: $rc"
+
+      - name: Prune old run folders (keep the seed + newest 80 real runs)
+        run: |
+          ls -d history/*/ 2>/dev/null | grep -v '/seed-' | sort | head -n -80 | xargs -r rm -rf
+          echo "history now holds $(ls -d history/*/ | wc -l) run folder(s)"
+
+      - name: Commit refreshed report + history
+        run: |
+          git config user.name  'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add history docs/flakehound.report.json docs/last-run.json
+          if git diff --staged --quiet; then
+            echo "nothing to commit"
+          else
+            git commit -m "flakehound: run ${GITHUB_RUN_NUMBER} on ${GITHUB_SHA::7} [skip ci]"
+            git push
+          fi

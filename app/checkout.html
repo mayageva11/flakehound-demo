@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flaky Shop — checkout</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<main class="shell">
+  <div class="card wide">
+    <div class="brand small">Flaky&nbsp;Shop</div>
+    <h1>Your cart</h1>
+    <ul id="cart" class="cart"></ul>
+    <div class="row total"><span>Subtotal</span><span id="cart-subtotal">—</span></div>
+    <p class="hint">The pay button boots asynchronously — it may take a moment to appear.</p>
+    <!--
+      BUG 1 lives here: #pay-button is revealed after a random 0–35s delay
+      (see scheduleSlowPayButton in js/shop.js). The `checkout` test waits for it
+      with a fixed SLA, so it intermittently times out → a real timeout flake.
+    -->
+    <button id="pay-button" hidden>Proceed to payment</button>
+  </div>
+  <p class="disclaimer">Seeded flakiness for demonstration — see the README.</p>
+</main>
+<script type="module">
+  import { CATALOG, LIST_TOTAL, money, requireSession, scheduleSlowPayButton } from './js/shop.js';
+  if (requireSession()) {
+    const cart = document.getElementById('cart');
+    cart.innerHTML = CATALOG
+      .map((item) => `<li><span>${item.name}</span><span>${money(item.listPrice)}</span></li>`)
+      .join('');
+    document.getElementById('cart-subtotal').textContent = money(LIST_TOTAL);
+
+    const payButton = document.getElementById('pay-button');
+    payButton.addEventListener('click', () => {
+      location.href = 'payment.html';
+    });
+    scheduleSlowPayButton(payButton);
+  }
+</script>
+</body>
+</html>

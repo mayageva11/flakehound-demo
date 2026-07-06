@@ -1,0 +1,65 @@
+:root {
+  --bg: #07090f;
+  --panel: #0d1220;
+  --line: #1c2740;
+  --text: #dbe4f3;
+  --dim: #8193b2;
+  --cyan: #22d3ee;
+  --pink: #f472b6;
+  --green: #34d399;
+  --red: #fb7185;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(1000px 500px at 80% -10%, rgba(34, 211, 238, 0.08), transparent 60%),
+    radial-gradient(800px 400px at 10% 110%, rgba(244, 114, 182, 0.07), transparent 60%),
+    var(--bg);
+  color: var(--text);
+  font: 15px/1.55 -apple-system, "Segoe UI", Inter, Roboto, sans-serif;
+}
+.shell { width: 100%; max-width: 460px; padding: 32px 20px; }
+.card {
+  background: linear-gradient(180deg, var(--panel), #0f1526);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 28px 26px;
+}
+.card.wide { max-width: 460px; }
+.brand {
+  font-family: var(--mono); font-size: 24px; font-weight: 700; letter-spacing: -0.5px;
+  background: linear-gradient(90deg, var(--cyan), var(--pink));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.brand.small { font-size: 18px; }
+h1 { font-size: 20px; margin: 14px 0 16px; }
+h2 { font-size: 15px; margin: 4px 0 12px; color: var(--dim); }
+.lede { color: var(--dim); font-size: 14px; margin: 8px 0 20px; }
+form { display: grid; gap: 14px; }
+label { display: grid; gap: 6px; font-size: 13px; color: var(--dim); }
+input {
+  background: #060810; border: 1px solid var(--line); border-radius: 10px;
+  padding: 11px 12px; color: var(--text); font-size: 15px;
+}
+input:focus { outline: none; border-color: var(--cyan); }
+button {
+  margin-top: 6px; padding: 12px 14px; border: none; border-radius: 10px;
+  font-size: 15px; font-weight: 600; cursor: pointer; color: #06121a;
+  background: linear-gradient(90deg, var(--cyan), var(--pink));
+}
+button:disabled { opacity: 0.45; cursor: not-allowed; }
+button[hidden] { display: none; }
+.cart { list-style: none; margin: 0 0 12px; padding: 0; }
+.cart li, .row { display: flex; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid var(--line); }
+.row.total { font-weight: 700; border-bottom: none; }
+#cart-total, #charged-amount, #receipt-total, #cart-subtotal { font-family: var(--mono); }
+.hint { color: var(--dim); font-size: 12.5px; margin: 6px 0 14px; }
+.error { color: var(--red); font-size: 13px; margin: 0; }
+.receipt { margin-top: 20px; padding-top: 12px; border-top: 1px dashed var(--line); }
+.ok { color: var(--green); font-size: 13px; }
+.disclaimer { text-align: center; color: var(--dim); font-size: 12px; margin-top: 18px; }

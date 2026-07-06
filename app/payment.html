@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flaky Shop — payment</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<main class="shell">
+  <div class="card wide">
+    <div class="brand small">Flaky&nbsp;Shop</div>
+    <h1>Payment</h1>
+
+    <div class="row"><span>Cart total</span><span id="cart-total" data-amount="">—</span></div>
+    <div class="row"><span>Amount to be charged</span><span id="charged-amount" data-amount="">—</span></div>
+
+    <button id="pay-now" disabled>Pay now</button>
+    <span id="pricing-ready" hidden></span>
+
+    <!--
+      BUG 3 lives here: #receipt-total is computed from LIST prices and never
+      applies the promo (see receiptTotal in js/shop.js), so it is consistently
+      wrong. The `receipt` test asserts it equals the charged amount and fails
+      every run → a regression, not a flake.
+    -->
+    <div id="receipt" class="receipt" hidden>
+      <h2>Order confirmation</h2>
+      <div class="row total"><span>Receipt total</span><span id="receipt-total" data-amount="">—</span></div>
+      <p class="ok">Thank you for shopping with Flaky Shop.</p>
+    </div>
+  </div>
+  <p class="disclaimer">Seeded flakiness for demonstration — see the README.</p>
+</main>
+<script type="module">
+  import { money, receiptTotal, requireSession, resolvePricing } from './js/shop.js';
+  if (requireSession()) {
+    const cartTotalEl = document.getElementById('cart-total');
+    const chargedEl = document.getElementById('charged-amount');
+    const payNow = document.getElementById('pay-now');
+
+    // BUG 2 lives in resolvePricing(): the cart total races an async promo, so
+    // the value shown here occasionally disagrees with the charged amount.
+    resolvePricing().then(({ cartTotal, charged }) => {
+      cartTotalEl.textContent = money(cartTotal);
+      cartTotalEl.dataset.amount = String(cartTotal);
+      chargedEl.textContent = money(charged);
+      chargedEl.dataset.amount = String(charged);
+      payNow.disabled = false;
+      document.getElementById('pricing-ready').hidden = false;
+    });
+
+    payNow.addEventListener('click', () => {
+      const total = receiptTotal(); // BUG 3: always the list total
+      const receiptEl = document.getElementById('receipt-total');
+      receiptEl.textContent = money(total);
+      receiptEl.dataset.amount = String(total);
+      document.getElementById('receipt').hidden = false;
+    });
+  }
+</script>
+</body>
+</html>

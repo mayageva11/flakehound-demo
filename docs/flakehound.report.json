@@ -1,0 +1,84 @@
+{
+  "version": 1,
+  "generatedAt": "2026-07-06T18:03:31.094Z",
+  "summary": {
+    "filesParsed": 5,
+    "testRuns": 20,
+    "metadataSources": {
+      "sidecar": 5,
+      "dirname": 0,
+      "mtime": 0
+    },
+    "testsAnalyzed": 4
+  },
+  "signals": [
+    {
+      "testId": "shop.spec.ts > checkout",
+      "flakinessScore": 0.6666666666666666,
+      "classification": "flaky",
+      "confidence": "medium",
+      "reason": "2 pass↔fail transition(s) on the same commit"
+    },
+    {
+      "testId": "shop.spec.ts > login",
+      "flakinessScore": 0,
+      "classification": "stable",
+      "confidence": "high"
+    },
+    {
+      "testId": "shop.spec.ts > payment",
+      "flakinessScore": 0.6666666666666666,
+      "classification": "flaky",
+      "confidence": "medium",
+      "reason": "2 pass↔fail transition(s) on the same commit"
+    },
+    {
+      "testId": "shop.spec.ts > receipt",
+      "flakinessScore": 0,
+      "classification": "regression",
+      "confidence": "high",
+      "reason": "failing in 100% of the last 3 run(s) since commit 5eed002; passed before it",
+      "brokenSinceSha": "5eed002"
+    }
+  ],
+  "clusters": [
+    {
+      "id": "1c30043e05a6",
+      "representativeTrace": "AssertionError: expected cart total to equal charged amount at PaymentPage.verify (payment-page.ts:<N>:<N>) at shop.spec.ts:<N>:<N>",
+      "tests": [
+        "shop.spec.ts > payment"
+      ],
+      "firstSeen": "2026-07-02T10:00:00.000Z",
+      "lastSeen": "2026-07-04T10:00:00.000Z",
+      "occurrences": 2
+    },
+    {
+      "id": "3b3af73dc648",
+      "representativeTrace": "AssertionError: expected receipt total to equal amount charged at ReceiptPage.verifyTotal (receipt-page.ts:<N>:<N>) at shop.spec.ts:<N>:<N>",
+      "tests": [
+        "shop.spec.ts > receipt"
+      ],
+      "firstSeen": "2026-07-02T10:00:00.000Z",
+      "lastSeen": "2026-07-04T10:00:00.000Z",
+      "occurrences": 3
+    },
+    {
+      "id": "842e18d0a516",
+      "representativeTrace": "TimeoutError: Timeout <DURATION> exceeded waiting for locator('#pay-button') at CheckoutPage.pay (checkout-page.ts:<N>:<N>) at shop.spec.ts:<N>:<N>",
+      "tests": [
+        "shop.spec.ts > checkout"
+      ],
+      "firstSeen": "2026-07-03T10:00:00.000Z",
+      "lastSeen": "2026-07-03T10:00:00.000Z",
+      "occurrences": 1
+    }
+  ],
+  "gate": {
+    "baselineUsed": false,
+    "newRegressions": [
+      "shop.spec.ts > receipt"
+    ],
+    "knownRegressions": [],
+    "resolvedRegressions": []
+  }
+}

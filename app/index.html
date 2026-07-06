@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flaky Shop — sign in</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<main class="shell">
+  <div class="card">
+    <div class="brand">Flaky&nbsp;Shop</div>
+    <p class="lede">A tiny demo storefront with bugs planted on purpose. Sign in to continue.</p>
+    <form id="login-form" novalidate>
+      <label>Username
+        <input id="username" name="username" autocomplete="username" value="demo" required>
+      </label>
+      <label>Password
+        <input id="password" name="password" type="password" autocomplete="current-password" value="demo" required>
+      </label>
+      <button id="login-button" type="submit">Sign in</button>
+      <p id="login-error" class="error" hidden>Enter a username and password.</p>
+    </form>
+  </div>
+  <p class="disclaimer">Seeded flakiness for demonstration — see the README.</p>
+</main>
+<script type="module">
+  import { login } from './js/shop.js';
+  const form = document.getElementById('login-form');
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value.trim();
+    const error = document.getElementById('login-error');
+    if (username === '' || password === '') {
+      error.hidden = false;
+      return;
+    }
+    error.hidden = true;
+    login(username);
+    location.href = 'checkout.html';
+  });
+</script>
+</body>
+</html>
