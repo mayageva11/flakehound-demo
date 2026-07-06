@@ -104,6 +104,11 @@
   summary .occ { font-family: var(--mono); font-size: 12.5px; color: var(--pink); border: 1px solid rgba(244,114,182,.4); border-radius: 8px; padding: 2px 9px; background: rgba(244,114,182,.07); }
   summary .cid { font-family: var(--mono); font-size: 11.5px; color: var(--dim); }
   .cluster .body { padding: 2px 16px 16px; border-top: 1px dashed var(--line); }
+  .hyp { display: flex; align-items: baseline; gap: 10px; margin: 12px 0 4px; flex-wrap: wrap; }
+  .hyp .cat { font-family: var(--mono); font-size: 11px; letter-spacing: 1px; text-transform: uppercase; border: 1px solid; border-radius: 20px; padding: 2px 10px; }
+  .hyp .exp { font-size: 13.5px; color: var(--text); }
+  .hyp .ai-tag { font-size: 10.5px; color: var(--dim); font-family: var(--mono); }
+  summary .ai-badge { font-family: var(--mono); font-size: 10.5px; color: var(--cyan); border: 1px solid rgba(34,211,238,.4); border-radius: 20px; padding: 1px 8px; }
   pre.trace { margin: 12px 0 4px; padding: 12px 14px; border-radius: 10px; overflow-x: auto; background: #060810; border: 1px solid var(--line); font-family: var(--mono); font-size: 12.5px; line-height: 1.6; color: #b7c5de; }
   pre.trace .ph { color: var(--pink); background: rgba(244,114,182,.1); border-radius: 4px; padding: 0 3px; }
   pre.trace .errcls { color: var(--red); font-weight: 700; }
@@ -247,6 +252,14 @@ const DEMO_ANNOTATIONS = {
   'shop.spec.ts > checkout': { kind: 'timeout', category: 'Timeout flake', blurb: 'Pay button renders after a random 0–35s delay; a fixed render SLA sometimes elapses first.' },
   'shop.spec.ts > payment':  { kind: 'race', category: 'Race-condition flake', blurb: 'Cart total reads shared pricing state that an async promo races; it occasionally disagrees with the charge.' },
   'shop.spec.ts > receipt':  { kind: 'regression', category: 'Regression', blurb: 'Receipt total always uses list prices, ignoring the promo — wrong every run.' },
+};
+
+const CATEGORY_COLORS = {
+  'race-condition': 'var(--pink)',
+  'timeout': 'var(--amber)',
+  'network': 'var(--blue)',
+  'environment': 'var(--violet)',
+  'assertion': 'var(--cyan)',
 };
 
 const esc = (s) => String(s).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
@@ -399,9 +412,16 @@ function render(report, source, lastRun) {
             <span class="rank">#${i + 1}</span>
             <span class="head">${esc(headOf(c.representativeTrace))}</span>
             <span class="occ">${c.occurrences}× · ${c.tests.length} test${c.tests.length > 1 ? 's' : ''}</span>
+            ${c.hypothesis ? '<span class="ai-badge">AI</span>' : ''}
             <span class="cid">${esc(c.id)}</span>
           </summary>
           <div class="body">
+            ${c.hypothesis ? `
+              <div class="hyp">
+                <span class="cat" style="color:${CATEGORY_COLORS[c.hypothesis.category] ?? 'var(--cyan)'};border-color:${CATEGORY_COLORS[c.hypothesis.category] ?? 'var(--cyan)'}">${esc(c.hypothesis.category)}</span>
+                <span class="exp">${esc(c.hypothesis.explanation)}</span>
+                <span class="ai-tag">— AI hypothesis (local model)</span>
+              </div>` : ''}
             <pre class="trace">${renderTrace(c.representativeTrace)}</pre>
             <div class="affected">affected: ${c.tests.map((t) => `<code>${esc(t)}</code>`).join(' · ')} &nbsp;·&nbsp; ${esc(day(c.firstSeen))} → ${esc(day(c.lastSeen))}</div>
           </div>

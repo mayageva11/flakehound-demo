@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-07-06T23:00:12.496Z",
+  "generatedAt": "2026-07-06T23:31:45.390Z",
   "summary": {
     "filesParsed": 5,
     "testRuns": 21,
@@ -50,7 +50,11 @@
       ],
       "firstSeen": "2026-07-02T10:00:00.000Z",
       "lastSeen": "2026-07-04T10:00:00.000Z",
-      "occurrences": 2
+      "occurrences": 2,
+      "hypothesis": {
+        "category": "assertion",
+        "explanation": "The failure occurs because the cart total calculation was not correctly updated during concurrent payments."
+      }
     },
     {
       "id": "3b3af73dc648",
@@ -60,7 +64,11 @@
       ],
       "firstSeen": "2026-07-02T10:00:00.000Z",
       "lastSeen": "2026-07-04T10:00:00.000Z",
-      "occurrences": 3
+      "occurrences": 3,
+      "hypothesis": {
+        "category": "assertion",
+        "explanation": "The test is failing because the expected receipt total and amount charged are not equal due to a mismatch in the calculation logic."
+      }
     },
     {
       "id": "842e18d0a516",
@@ -70,7 +78,11 @@
       ],
       "firstSeen": "2026-07-03T10:00:00.000Z",
       "lastSeen": "2026-07-04T10:00:00.000Z",
-      "occurrences": 2
+      "occurrences": 2,
+      "hypothesis": {
+        "category": "timeout",
+        "explanation": "The test is waiting too long for a locator to be found on the CheckoutPage object."
+      }
     }
   ],
   "gate": {

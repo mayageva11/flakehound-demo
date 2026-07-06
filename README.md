@@ -19,8 +19,13 @@ at the root, the shop from `docs/shop/`._
 > here claims flakehound looks at source code or a live URL; it reads the XML a
 > CI run leaves behind.
 
-The whole pipeline runs with `--no-ai` — the deterministic core only — so the
-scheduled dashboard stays free to run forever.
+The hypothesis layer uses flakehound's `auto` provider chain, so it costs nothing
+either way: on a machine with **local Ollama** running, each failure cluster gets
+a one-line AI hypothesis (`timeout`, `assertion`, …) generated **locally at zero
+cost** — that's what the dashboard shows here. The **scheduled cloud runner has no
+local model and no API key, so it auto-skips** the AI step and publishes the
+deterministic report. Either way the pipeline is free to run forever; the AI is a
+local-first enrichment, never the source of truth.
 
 ---
 
@@ -73,7 +78,9 @@ flakehound track a test's history.
 1. runs the suite against the live shop → `junit.xml` + a `junit.meta.json`
    sidecar (`$GITHUB_SHA`, timestamp, runner) into a dated `history/` folder;
 2. runs `flakehound analyze` over the **accumulated** history, with the previous
-   report as `--baseline`, using `--no-ai`;
+   report as `--baseline` (AI hypotheses auto-skip on the cloud runner — no local
+   model — so cloud runs stay free and deterministic; run `npm run analyze`
+   locally with Ollama up to enrich the report with hypotheses);
 3. commits the refreshed `docs/flakehound.report.json` back to the repo (that
    commit *is* the persisted baseline for the next run);
 4. republishes `docs/` — the dashboard, stamped with **"last run: X ago."**

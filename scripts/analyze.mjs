@@ -7,7 +7,8 @@
  *      clone + build it into .flakehound). flakehound itself stays untouched.
  *   2. Use the CURRENT docs/flakehound.report.json as the baseline (so a
  *      regression fails the gate once, then reads as "known").
- *   3. Analyze history/ with --no-ai and write the fresh report into docs/.
+ *   3. Analyze history/ (AI hypotheses via the local Ollama model when reachable,
+ *      otherwise auto-skips — free) and write the fresh report into docs/.
  *   4. Write docs/last-run.json for the dashboard's "last run" stamp.
  *
  * Exit code mirrors flakehound: 0 clean, 1 new regression, 2 tool error. The
@@ -59,6 +60,12 @@ if (existsSync(reportPath)) {
   baselineArgs.push('--baseline', baseline);
 }
 
+// AI hypotheses use flakehound's `auto` provider chain: a reachable local Ollama
+// (your machine) annotates each cluster at zero cost; the cloud CI runner has no
+// local model and no API key, so it auto-skips — free either way. Set
+// FLAKEHOUND_NO_AI=1 to force the deterministic-only path.
+const aiArgs = process.env.FLAKEHOUND_NO_AI ? ['--no-ai'] : [];
+
 let exitCode = 0;
 try {
   run('node', [
@@ -68,7 +75,7 @@ try {
     'history/**/*.xml',
     '--json',
     reportPath,
-    '--no-ai',
+    ...aiArgs,
     ...baselineArgs,
   ], { cwd: root });
 } catch (error) {
