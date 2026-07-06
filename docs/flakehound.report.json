@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "generatedAt": "2026-07-06T18:03:31.094Z",
+  "generatedAt": "2026-07-06T20:05:30.507Z",
   "summary": {
-    "filesParsed": 5,
-    "testRuns": 20,
+    "filesParsed": 6,
+    "testRuns": 24,
     "metadataSources": {
-      "sidecar": 5,
+      "sidecar": 6,
       "dirname": 0,
       "mtime": 0
     },
@@ -37,7 +37,7 @@
       "flakinessScore": 0,
       "classification": "regression",
       "confidence": "high",
-      "reason": "failing in 100% of the last 3 run(s) since commit 5eed002; passed before it",
+      "reason": "failing in 100% of the last 4 run(s) since commit 5eed002; passed before it",
       "brokenSinceSha": "5eed002"
     }
   ],
@@ -63,6 +63,19 @@
       "occurrences": 3
     },
     {
+      "id": "a11f11530b53",
+      "representativeTrace": "Error: page.goto: Protocol error (Page.navigate): Cannot navigate to invalid URL Call log: - navigating to \"index.html\", waiting until \"load\" at LoginPage.goto (login-page.ts:<N>:<N>) at shop.spec.ts:<N>:<N>",
+      "tests": [
+        "shop.spec.ts > checkout",
+        "shop.spec.ts > login",
+        "shop.spec.ts > payment",
+        "shop.spec.ts > receipt"
+      ],
+      "firstSeen": "2026-07-06T20:05:20.000Z",
+      "lastSeen": "2026-07-06T20:05:20.000Z",
+      "occurrences": 4
+    },
+    {
       "id": "842e18d0a516",
       "representativeTrace": "TimeoutError: Timeout <DURATION> exceeded waiting for locator('#pay-button') at CheckoutPage.pay (checkout-page.ts:<N>:<N>) at shop.spec.ts:<N>:<N>",
       "tests": [
@@ -74,11 +87,11 @@
     }
   ],
   "gate": {
-    "baselineUsed": false,
-    "newRegressions": [
+    "baselineUsed": true,
+    "newRegressions": [],
+    "knownRegressions": [
       "shop.spec.ts > receipt"
     ],
-    "knownRegressions": [],
     "resolvedRegressions": []
   }
 }
