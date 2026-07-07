@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "generatedAt": "2026-07-07T02:37:32.497Z",
+  "generatedAt": "2026-07-07T09:33:06.100Z",
   "summary": {
-    "filesParsed": 6,
-    "testRuns": 29,
+    "filesParsed": 7,
+    "testRuns": 35,
     "metadataSources": {
-      "sidecar": 6,
+      "sidecar": 7,
       "dirname": 0,
       "mtime": 0
     },
@@ -37,7 +37,7 @@
       "flakinessScore": 0,
       "classification": "regression",
       "confidence": "high",
-      "reason": "failing in 100% of the last 4 run(s) since commit 5eed002; passed before it",
+      "reason": "failing in 100% of the last 5 run(s) since commit 5eed002; passed before it",
       "brokenSinceSha": "5eed002"
     }
   ],
@@ -59,8 +59,8 @@
         "shop.spec.ts > receipt"
       ],
       "firstSeen": "2026-07-02T10:00:00.000Z",
-      "lastSeen": "2026-07-07T02:36:31.000Z",
-      "occurrences": 6
+      "lastSeen": "2026-07-07T09:32:49.000Z",
+      "occurrences": 9
     },
     {
       "id": "842e18d0a516",
