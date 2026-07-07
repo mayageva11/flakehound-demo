@@ -106,6 +106,18 @@ checkout if present, otherwise it clones and builds it into `.flakehound/`
 (flakehound itself is never modified). Then open `docs/index.html` (via any
 static server, e.g. `npx serve docs`) to see the dashboard.
 
+For PR-based repos there's also a one-step alternative to the hand-rolled
+workflow here — flakehound's reusable action, which gates and posts the summary
+as a PR comment:
+
+```yaml
+- uses: mayageva11/flakehound@main
+  with:
+    input-glob: 'history/**/*.xml'
+    baseline: flakehound.report.json
+    comment: 'true'
+```
+
 Because defects 1 and 2 are timing-based, a single local run is a coin toss —
 run `npm test` a handful of times and watch `checkout`/`payment` flip while
 `receipt` fails every time.
