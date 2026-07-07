@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "generatedAt": "2026-07-06T23:31:45.390Z",
+  "generatedAt": "2026-07-07T02:37:32.497Z",
   "summary": {
-    "filesParsed": 5,
-    "testRuns": 21,
+    "filesParsed": 6,
+    "testRuns": 29,
     "metadataSources": {
-      "sidecar": 5,
+      "sidecar": 6,
       "dirname": 0,
       "mtime": 0
     },
@@ -17,7 +17,7 @@
       "flakinessScore": 1,
       "classification": "flaky",
       "confidence": "high",
-      "reason": "1 retry flip(s) within a single run; 2 pass↔fail transition(s) on the same commit"
+      "reason": "2 retry flip(s) within a single run; 2 pass↔fail transition(s) on the same commit"
     },
     {
       "testId": "shop.spec.ts > login",
@@ -37,7 +37,7 @@
       "flakinessScore": 0,
       "classification": "regression",
       "confidence": "high",
-      "reason": "failing in 100% of the last 3 run(s) since commit 5eed002; passed before it",
+      "reason": "failing in 100% of the last 4 run(s) since commit 5eed002; passed before it",
       "brokenSinceSha": "5eed002"
     }
   ],
@@ -50,11 +50,7 @@
       ],
       "firstSeen": "2026-07-02T10:00:00.000Z",
       "lastSeen": "2026-07-04T10:00:00.000Z",
-      "occurrences": 2,
-      "hypothesis": {
-        "category": "assertion",
-        "explanation": "The failure occurs because the cart total calculation was not correctly updated during concurrent payments."
-      }
+      "occurrences": 2
     },
     {
       "id": "3b3af73dc648",
@@ -63,12 +59,8 @@
         "shop.spec.ts > receipt"
       ],
       "firstSeen": "2026-07-02T10:00:00.000Z",
-      "lastSeen": "2026-07-04T10:00:00.000Z",
-      "occurrences": 3,
-      "hypothesis": {
-        "category": "assertion",
-        "explanation": "The test is failing because the expected receipt total and amount charged are not equal due to a mismatch in the calculation logic."
-      }
+      "lastSeen": "2026-07-07T02:36:31.000Z",
+      "occurrences": 6
     },
     {
       "id": "842e18d0a516",
@@ -77,20 +69,16 @@
         "shop.spec.ts > checkout"
       ],
       "firstSeen": "2026-07-03T10:00:00.000Z",
-      "lastSeen": "2026-07-04T10:00:00.000Z",
-      "occurrences": 2,
-      "hypothesis": {
-        "category": "timeout",
-        "explanation": "The test is waiting too long for a locator to be found on the CheckoutPage object."
-      }
+      "lastSeen": "2026-07-07T02:36:31.000Z",
+      "occurrences": 4
     }
   ],
   "gate": {
-    "baselineUsed": false,
-    "newRegressions": [
+    "baselineUsed": true,
+    "newRegressions": [],
+    "knownRegressions": [
       "shop.spec.ts > receipt"
     ],
-    "knownRegressions": [],
     "resolvedRegressions": []
   }
 }
