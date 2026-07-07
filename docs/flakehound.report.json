@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-07-07T09:33:06.100Z",
+  "generatedAt": "2026-07-07T12:12:17.177Z",
   "summary": {
     "filesParsed": 7,
     "testRuns": 35,
@@ -17,20 +17,152 @@
       "flakinessScore": 1,
       "classification": "flaky",
       "confidence": "high",
-      "reason": "2 retry flip(s) within a single run; 2 pass↔fail transition(s) on the same commit"
+      "reason": "2 retry flip(s) within a single run; 2 pass↔fail transition(s) on the same commit",
+      "history": [
+        {
+          "timestamp": "2026-06-30T10:00:00.000Z",
+          "commitSha": "5eed001",
+          "verdict": "pass",
+          "retryFlips": 0
+        },
+        {
+          "timestamp": "2026-07-01T10:00:00.000Z",
+          "commitSha": "5eed001",
+          "verdict": "pass",
+          "retryFlips": 0
+        },
+        {
+          "timestamp": "2026-07-02T10:00:00.000Z",
+          "commitSha": "5eed002",
+          "verdict": "pass",
+          "retryFlips": 0
+        },
+        {
+          "timestamp": "2026-07-03T10:00:00.000Z",
+          "commitSha": "5eed002",
+          "verdict": "fail",
+          "retryFlips": 0
+        },
+        {
+          "timestamp": "2026-07-04T10:00:00.000Z",
+          "commitSha": "5eed002",
+          "verdict": "pass",
+          "retryFlips": 1
+        },
+        {
+          "timestamp": "2026-07-07T02:36:31.000Z",
+          "commitSha": "86a35cc3d94b9e9e0f10df3e4b185283654a86da",
+          "verdict": "pass",
+          "retryFlips": 1
+        },
+        {
+          "timestamp": "2026-07-07T09:32:49.000Z",
+          "commitSha": "ee4fc18d2e920ed87898cca83a3ce3a4943b9247",
+          "verdict": "pass",
+          "retryFlips": 0
+        }
+      ]
     },
     {
       "testId": "shop.spec.ts > login",
       "flakinessScore": 0,
       "classification": "stable",
-      "confidence": "high"
+      "confidence": "high",
+      "history": [
+        {
+          "timestamp": "2026-06-30T10:00:00.000Z",
+          "commitSha": "5eed001",
+          "verdict": "pass",
+          "retryFlips": 0
+        },
+        {
+          "timestamp": "2026-07-01T10:00:00.000Z",
+          "commitSha": "5eed001",
+          "verdict": "pass",
+          "retryFlips": 0
+        },
+        {
+          "timestamp": "2026-07-02T10:00:00.000Z",
+          "commitSha": "5eed002",
+          "verdict": "pass",
+          "retryFlips": 0
+        },
+        {
+          "timestamp": "2026-07-03T10:00:00.000Z",
+          "commitSha": "5eed002",
+          "verdict": "pass",
+          "retryFlips": 0
+        },
+        {
+          "timestamp": "2026-07-04T10:00:00.000Z",
+          "commitSha": "5eed002",
+          "verdict": "pass",
+          "retryFlips": 0
+        },
+        {
+          "timestamp": "2026-07-07T02:36:31.000Z",
+          "commitSha": "86a35cc3d94b9e9e0f10df3e4b185283654a86da",
+          "verdict": "pass",
+          "retryFlips": 0
+        },
+        {
+          "timestamp": "2026-07-07T09:32:49.000Z",
+          "commitSha": "ee4fc18d2e920ed87898cca83a3ce3a4943b9247",
+          "verdict": "pass",
+          "retryFlips": 0
+        }
+      ]
     },
     {
       "testId": "shop.spec.ts > payment",
       "flakinessScore": 0.6666666666666666,
       "classification": "flaky",
       "confidence": "medium",
-      "reason": "2 pass↔fail transition(s) on the same commit"
+      "reason": "2 pass↔fail transition(s) on the same commit",
+      "history": [
+        {
+          "timestamp": "2026-06-30T10:00:00.000Z",
+          "commitSha": "5eed001",
+          "verdict": "pass",
+          "retryFlips": 0
+        },
+        {
+          "timestamp": "2026-07-01T10:00:00.000Z",
+          "commitSha": "5eed001",
+          "verdict": "pass",
+          "retryFlips": 0
+        },
+        {
+          "timestamp": "2026-07-02T10:00:00.000Z",
+          "commitSha": "5eed002",
+          "verdict": "fail",
+          "retryFlips": 0
+        },
+        {
+          "timestamp": "2026-07-03T10:00:00.000Z",
+          "commitSha": "5eed002",
+          "verdict": "pass",
+          "retryFlips": 0
+        },
+        {
+          "timestamp": "2026-07-04T10:00:00.000Z",
+          "commitSha": "5eed002",
+          "verdict": "fail",
+          "retryFlips": 0
+        },
+        {
+          "timestamp": "2026-07-07T02:36:31.000Z",
+          "commitSha": "86a35cc3d94b9e9e0f10df3e4b185283654a86da",
+          "verdict": "pass",
+          "retryFlips": 0
+        },
+        {
+          "timestamp": "2026-07-07T09:32:49.000Z",
+          "commitSha": "ee4fc18d2e920ed87898cca83a3ce3a4943b9247",
+          "verdict": "pass",
+          "retryFlips": 0
+        }
+      ]
     },
     {
       "testId": "shop.spec.ts > receipt",
@@ -38,7 +170,51 @@
       "classification": "regression",
       "confidence": "high",
       "reason": "failing in 100% of the last 5 run(s) since commit 5eed002; passed before it",
-      "brokenSinceSha": "5eed002"
+      "brokenSinceSha": "5eed002",
+      "history": [
+        {
+          "timestamp": "2026-06-30T10:00:00.000Z",
+          "commitSha": "5eed001",
+          "verdict": "pass",
+          "retryFlips": 0
+        },
+        {
+          "timestamp": "2026-07-01T10:00:00.000Z",
+          "commitSha": "5eed001",
+          "verdict": "pass",
+          "retryFlips": 0
+        },
+        {
+          "timestamp": "2026-07-02T10:00:00.000Z",
+          "commitSha": "5eed002",
+          "verdict": "fail",
+          "retryFlips": 0
+        },
+        {
+          "timestamp": "2026-07-03T10:00:00.000Z",
+          "commitSha": "5eed002",
+          "verdict": "fail",
+          "retryFlips": 0
+        },
+        {
+          "timestamp": "2026-07-04T10:00:00.000Z",
+          "commitSha": "5eed002",
+          "verdict": "fail",
+          "retryFlips": 0
+        },
+        {
+          "timestamp": "2026-07-07T02:36:31.000Z",
+          "commitSha": "86a35cc3d94b9e9e0f10df3e4b185283654a86da",
+          "verdict": "fail",
+          "retryFlips": 0
+        },
+        {
+          "timestamp": "2026-07-07T09:32:49.000Z",
+          "commitSha": "ee4fc18d2e920ed87898cca83a3ce3a4943b9247",
+          "verdict": "fail",
+          "retryFlips": 0
+        }
+      ]
     }
   ],
   "clusters": [
@@ -50,7 +226,11 @@
       ],
       "firstSeen": "2026-07-02T10:00:00.000Z",
       "lastSeen": "2026-07-04T10:00:00.000Z",
-      "occurrences": 2
+      "occurrences": 2,
+      "hypothesis": {
+        "category": "assertion",
+        "explanation": "The test is verifying an incorrect condition in the payment logic."
+      }
     },
     {
       "id": "3b3af73dc648",
@@ -60,7 +240,11 @@
       ],
       "firstSeen": "2026-07-02T10:00:00.000Z",
       "lastSeen": "2026-07-07T09:32:49.000Z",
-      "occurrences": 9
+      "occurrences": 9,
+      "hypothesis": {
+        "category": "assertion",
+        "explanation": "The test is vulnerable to data corruption due to incorrect handling of volatile tokens."
+      }
     },
     {
       "id": "842e18d0a516",
@@ -70,7 +254,11 @@
       ],
       "firstSeen": "2026-07-03T10:00:00.000Z",
       "lastSeen": "2026-07-07T02:36:31.000Z",
-      "occurrences": 4
+      "occurrences": 4,
+      "hypothesis": {
+        "category": "timeout",
+        "explanation": "The test is waiting for an element that is not present on the page within a time limit."
+      }
     }
   ],
   "gate": {

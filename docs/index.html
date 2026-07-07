@@ -87,6 +87,14 @@
   .scorebar .track { flex: 1; height: 7px; border-radius: 4px; background: #131c30; overflow: hidden; }
   .scorebar .fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--cyan), var(--pink)); box-shadow: 0 0 12px rgba(244, 114, 182, 0.5); }
   .scorebar .val { font-family: var(--mono); font-size: 12.5px; color: var(--pink); min-width: 34px; text-align: right; }
+  /* per-run history timeline (signals[].history) */
+  .run-history { display: flex; align-items: center; gap: 4px; margin-top: 9px; flex-wrap: wrap; }
+  .run-history .rh-label { font-family: var(--mono); font-size: 10px; color: var(--dim); letter-spacing: 0.5px; text-transform: uppercase; margin-right: 2px; }
+  .run-history .rh-cell { width: 13px; height: 13px; border-radius: 4px; display: inline-block; border: 1px solid rgba(255,255,255,0.12); }
+  .run-history .rh-cell.pass { background: var(--green); box-shadow: 0 0 6px rgba(52, 211, 153, 0.4); }
+  .run-history .rh-cell.fail { background: var(--red); box-shadow: 0 0 6px rgba(251, 113, 133, 0.4); }
+  .run-history .rh-cell.skip { background: rgba(129, 147, 178, 0.25); }
+  .run-history .rh-cell.flip { outline: 2px solid var(--amber); outline-offset: 1px; }
   .chip { display: inline-block; font-family: var(--mono); font-size: 11px; letter-spacing: 0.5px; border: 1px solid; border-radius: 20px; padding: 1.5px 9px; vertical-align: middle; }
   .chip.high { color: var(--green); border-color: rgba(52,211,153,.45); background: rgba(52,211,153,.08); }
   .chip.medium { color: var(--amber); border-color: rgba(251,191,36,.45); background: rgba(251,191,36,.08); }
@@ -269,6 +277,19 @@ function catChip(testId) {
   const a = DEMO_ANNOTATIONS[testId];
   return a ? `<span class="cat-chip ${a.kind}">${esc(a.category)}</span>` : '';
 }
+
+/* Per-run pass/fail timeline from signals[].history: green pass, red fail,
+   amber outline = intra-run retry flip. Empty when the report predates history. */
+function runHistory(signal) {
+  const history = signal.history ?? [];
+  if (history.length === 0) return '';
+  const cells = history.map((h) => {
+    const flip = h.retryFlips > 0 ? ' flip' : '';
+    const title = `${day(h.timestamp)} · ${h.commitSha ? h.commitSha.slice(0, 7) : 'no sha'} · ${h.verdict}${h.retryFlips > 0 ? ' (retry flip)' : ''}`;
+    return `<span class="rh-cell ${h.verdict}${flip}" title="${esc(title)}"></span>`;
+  });
+  return `<div class="run-history"><span class="rh-label">runs</span>${cells.join('')}</div>`;
+}
 const day = (iso) => iso.slice(0, 10);
 
 function relTime(iso) {
@@ -385,6 +406,7 @@ function render(report, source, lastRun) {
             <div class="tid">${esc(s.testId)} ${catChip(s.testId)}</div>
             <div class="since">broken since ${esc(s.brokenSinceSha ?? '?')}</div>
             ${s.reason ? `<div class="reason">${esc(s.reason)}</div>` : ''}
+            ${runHistory(s)}
           </div>`).join('')}
       </section>
       <section class="panel">
@@ -397,6 +419,7 @@ function render(report, source, lastRun) {
               <div class="val">${s.flakinessScore.toFixed(2)}</div>
             </div>
             ${s.reason ? `<div class="reason">${esc(s.reason)}</div>` : ''}
+            ${runHistory(s)}
           </div>`).join('')}
       </section>
     </div>`);
