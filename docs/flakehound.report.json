@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-07-07T12:12:17.177Z",
+  "generatedAt": "2026-07-07T12:23:05.620Z",
   "summary": {
     "filesParsed": 7,
     "testRuns": 35,
@@ -229,7 +229,7 @@
       "occurrences": 2,
       "hypothesis": {
         "category": "assertion",
-        "explanation": "The test is verifying an incorrect condition in the payment logic."
+        "explanation": "The error occurs when the cart total and charged amount are not equal due to an incorrect calculation or data corruption."
       }
     },
     {
@@ -243,7 +243,7 @@
       "occurrences": 9,
       "hypothesis": {
         "category": "assertion",
-        "explanation": "The test is vulnerable to data corruption due to incorrect handling of volatile tokens."
+        "explanation": "The failure occurs because the expected receipt total and amount charged are not equal, indicating a flawed assertion in the VerifyTotal method."
       }
     },
     {
@@ -257,7 +257,7 @@
       "occurrences": 4,
       "hypothesis": {
         "category": "timeout",
-        "explanation": "The test is waiting for an element that is not present on the page within a time limit."
+        "explanation": "The test is waiting for a locator that may not be present or responding slowly enough to exceed the specified timeout duration."
       }
     }
   ],
@@ -267,6 +267,12 @@
     "knownRegressions": [
       "shop.spec.ts > receipt"
     ],
-    "resolvedRegressions": []
+    "resolvedRegressions": [],
+    "newClusters": [],
+    "knownClusters": [
+      "1c30043e05a6",
+      "3b3af73dc648",
+      "842e18d0a516"
+    ]
   }
 }
