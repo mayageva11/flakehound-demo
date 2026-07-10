@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="shop.spec.ts" tests="7" failures="4" time="35.644">
+    <testcase name="login" classname="shop.spec.ts" time="0.610"/>
+    <testcase name="payment" classname="shop.spec.ts" time="0.276"/>
+    <testcase name="receipt" classname="shop.spec.ts" time="0.460">
+      <failure message="AssertionError: expected receipt total to equal amount charged">AssertionError: expected receipt total to equal amount charged
+    at ReceiptPage.verifyTotal (/home/runner/work/flakehound-demo/flakehound-demo/tests/pages/receipt-page.ts:23:13)
+    at /home/runner/work/flakehound-demo/flakehound-demo/tests/shop.spec.ts:56:3</failure>
+    </testcase>
+    <testcase name="receipt" classname="shop.spec.ts" time="0.400">
+      <failure message="AssertionError: expected receipt total to equal amount charged">AssertionError: expected receipt total to equal amount charged
+    at ReceiptPage.verifyTotal (/home/runner/work/flakehound-demo/flakehound-demo/tests/pages/receipt-page.ts:23:13)
+    at /home/runner/work/flakehound-demo/flakehound-demo/tests/shop.spec.ts:56:3</failure>
+    </testcase>
+    <testcase name="receipt" classname="shop.spec.ts" time="0.529">
+      <failure message="AssertionError: expected receipt total to equal amount charged">AssertionError: expected receipt total to equal amount charged
+    at ReceiptPage.verifyTotal (/home/runner/work/flakehound-demo/flakehound-demo/tests/pages/receipt-page.ts:23:13)
+    at /home/runner/work/flakehound-demo/flakehound-demo/tests/shop.spec.ts:56:3</failure>
+    </testcase>
+    <testcase name="checkout" classname="shop.spec.ts" time="20.653">
+      <failure message="TimeoutError: Timeout 20000ms exceeded waiting for locator('#pay-button')">TimeoutError: Timeout 20000ms exceeded waiting for locator('#pay-button')
+    at CheckoutPage.pay (/home/runner/work/flakehound-demo/flakehound-demo/tests/pages/checkout-page.ts:24:13)
+    at /home/runner/work/flakehound-demo/flakehound-demo/tests/shop.spec.ts:38:3</failure>
+    </testcase>
+    <testcase name="checkout" classname="shop.spec.ts" time="12.716"/>
+  </testsuite>
+</testsuites>
