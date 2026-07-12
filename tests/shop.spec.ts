@@ -29,7 +29,8 @@ test('login', async ({ page }) => {
   await login.expectSignedIn();
 });
 
-test('checkout', async ({ page }) => {
+// flakehound-quarantined cluster=842e18d0a516 issue=https://github.com/mayageva11/flakehound-demo/issues/1 — managed by 'flakehound quarantine', do not edit
+test('checkout', { tag: '@flakehound-quarantined' }, async ({ page }) => {
   // BUG 1: the pay button is revealed after a random 0–35s delay; the SLA wait
   // in CheckoutPage.pay times out when the delay is long → intermittent flake.
   await signIn(page);
@@ -38,7 +39,8 @@ test('checkout', async ({ page }) => {
   await checkout.pay();
 });
 
-test('payment', async ({ page }) => {
+// flakehound-quarantined cluster=1c30043e05a6 issue=https://github.com/mayageva11/flakehound-demo/issues/2 — managed by 'flakehound quarantine', do not edit
+test('payment', { tag: '@flakehound-quarantined' }, async ({ page }) => {
   // BUG 2: the cart total races an async promo, so it occasionally disagrees
   // with the charged amount → intermittent flake.
   await signIn(page);
