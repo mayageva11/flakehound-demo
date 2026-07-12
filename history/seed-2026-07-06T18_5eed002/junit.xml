@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="inventory.spec.ts" tests="2" failures="1" time="4.000">
+    <testcase name="catalog" classname="inventory.spec.ts" time="0.450"/>
+    <testcase name="restock" classname="inventory.spec.ts" time="0.320">
+      <failure message="EnvironmentError: shop unavailable during maintenance window">EnvironmentError: shop unavailable during maintenance window
+    at InventoryPage.expectRestockSchedule (/home/runner/work/flakehound-demo/flakehound-demo/tests/pages/inventory-page.ts:36:13)
+    at /home/runner/work/flakehound-demo/flakehound-demo/tests/inventory.spec.ts:26:3</failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="shop.spec.ts" tests="4" failures="1" time="8.000">
+    <testcase name="login" classname="shop.spec.ts" time="0.700"/>
+    <testcase name="checkout" classname="shop.spec.ts" time="20.000"/>
+    <testcase name="payment" classname="shop.spec.ts" time="1.200"/>
+    <testcase name="receipt" classname="shop.spec.ts" time="1.400">
+      <failure message="AssertionError: expected receipt total to equal amount charged">AssertionError: expected receipt total to equal amount charged
+    at ReceiptPage.verifyTotal (/home/runner/work/flakehound-demo/flakehound-demo/tests/pages/receipt-page.ts:36:13)
+    at /home/runner/work/flakehound-demo/flakehound-demo/tests/shop.spec.ts:54:18</failure>
+    </testcase>
+  </testsuite>
+</testsuites>

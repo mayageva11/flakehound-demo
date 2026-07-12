@@ -8,3 +8,11 @@ export class AssertionError extends Error {
 export class TimeoutError extends Error {
   override name = 'TimeoutError';
 }
+
+export class NetworkError extends Error {
+  override name = 'NetworkError';
+}
+
+export class EnvironmentError extends Error {
+  override name = 'EnvironmentError';
+}

@@ -16,6 +16,7 @@ concurrency:
 
 permissions:
   contents: write # commit history + refreshed report back to the repo
+  issues: write # `flakehound quarantine` files/closes one issue per quarantined test
 
 jobs:
   analyze:
@@ -76,6 +77,16 @@ jobs:
           if [ "$rc" -eq 2 ]; then exit 2; fi
           echo "flakehound exit code: $rc"
 
+      - name: Quarantine flaky tests / release stable ones (apply + GitHub issues)
+        # `flakehound quarantine --apply` tags newly high-confidence flaky tests
+        # in their spec files (and files an issue each), releases tests that hit
+        # stableRunsToRelease clean passes (closing their issues), and syncs the
+        # state file into docs/ for the dashboard. It edits files but never
+        # commits — the commit step below carries everything.
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/quarantine.mjs
+
       - name: Prune old run folders (keep the seed + newest 80 real runs)
         run: |
           ls -d history/*/ 2>/dev/null | grep -v '/seed-' | sort | head -n -80 | xargs -r rm -rf
@@ -85,7 +96,8 @@ jobs:
         run: |
           git config user.name  'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
-          git add history docs/flakehound.report.json docs/last-run.json
+          git add history docs tests
+          if [ -f flakehound.quarantine.json ]; then git add flakehound.quarantine.json; fi
           if git diff --staged --quiet; then
             echo "nothing to commit"
           else

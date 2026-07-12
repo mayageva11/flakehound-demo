@@ -3,8 +3,8 @@
  *
  * Used identically by `npm run analyze` locally and by the scheduled workflow.
  * Steps:
- *   1. Locate the flakehound CLI (FLAKEHOUND_CLI env, a sibling checkout, or
- *      clone + build it into .flakehound). flakehound itself stays untouched.
+ *   1. Locate the flakehound CLI (see scripts/resolve-cli.mjs — env override,
+ *      the npm devDependency, a sibling checkout, or clone + build).
  *   2. Use the CURRENT docs/flakehound.report.json as the baseline (so a
  *      regression fails the gate once, then reads as "known").
  *   3. Analyze history/ (AI hypotheses via the local Ollama model when reachable,
@@ -19,34 +19,13 @@ import { copyFileSync, existsSync, mkdtempSync, rmSync, writeFileSync } from 'no
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { resolveFlakehoundCli } from './resolve-cli.mjs';
 
 const root = path.resolve(fileURLToPath(new URL('..', import.meta.url)));
-const FLAKEHOUND_REPO = 'https://github.com/mayageva11/flakehound.git';
 const reportPath = path.join(root, 'docs', 'flakehound.report.json');
 
 function run(cmd, args, opts = {}) {
   execFileSync(cmd, args, { stdio: 'inherit', ...opts });
-}
-
-/** Locate a runnable flakehound CLI, cloning + building if necessary. */
-function resolveFlakehoundCli() {
-  const fromEnv = process.env.FLAKEHOUND_CLI;
-  if (fromEnv && existsSync(fromEnv)) return fromEnv;
-
-  const sibling = path.resolve(root, '..', 'flakehound', 'dist', 'cli.js');
-  if (existsSync(sibling)) return sibling;
-
-  const vendored = path.join(root, '.flakehound');
-  const cli = path.join(vendored, 'dist', 'cli.js');
-  if (!existsSync(cli)) {
-    if (!existsSync(vendored)) {
-      const ref = process.env.FLAKEHOUND_REF ?? 'main';
-      run('git', ['clone', '--depth', '1', '--branch', ref, FLAKEHOUND_REPO, vendored]);
-    }
-    run('npm', ['ci'], { cwd: vendored });
-    run('npm', ['run', 'build'], { cwd: vendored });
-  }
-  return cli;
 }
 
 const cli = resolveFlakehoundCli();

@@ -1,0 +1,25 @@
+name: ci
+
+# The BLOCKING lane of the two-lane quarantine pattern: pull requests run the
+# suite with quarantined tests excluded, so a quarantined flake can never fail
+# a PR. The quarantined tests still run — in the scheduled flakehound.yml
+# history lane — which is what keeps their signal flowing and lets flakehound
+# auto-release them once they stabilize.
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  blocking-lane:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      # No SHOP_URL → playwright.config.ts boots the local static server, so
+      # the PR is tested against ITS OWN shop code, not the deployed site.
+      - run: npx playwright test --grep-invert "@flakehound-quarantined"

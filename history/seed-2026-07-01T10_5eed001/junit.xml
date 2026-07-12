@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="shop.spec.ts" tests="4" failures="0" time="23.300">
+  <testsuite name="shop.spec.ts" tests="4" failures="0" time="8.000">
     <testcase name="login" classname="shop.spec.ts" time="0.700"/>
     <testcase name="checkout" classname="shop.spec.ts" time="20.000"/>
     <testcase name="payment" classname="shop.spec.ts" time="1.200"/>

@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flaky Shop — inventory</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<main class="shell">
+  <div class="card wide">
+    <div class="brand small">Flaky&nbsp;Shop</div>
+    <h1>Inventory</h1>
+
+    <!--
+      BUG 4 lives here: the catalog loads through fetchCatalog() in js/shop.js,
+      which fails with a simulated 502 on ~25% of loads. On failure the error
+      lands in #catalog-error → the `catalog` test sees an intermittent
+      network failure.
+    -->
+    <h2>Catalog</h2>
+    <ul id="catalog-list" class="cart" hidden></ul>
+    <p id="catalog-error" class="error" hidden></p>
+
+    <!--
+      BUG 5 lives here: the restock schedule hides behind a "maintenance
+      window" (first 8 minutes of every UTC hour, see maintenanceWindowActive
+      in js/shop.js). The `restock` test fails only when a CI run lands inside
+      the window → an environment-dependent flake.
+    -->
+    <h2>Restock schedule</h2>
+    <ul id="restock-table" class="cart" hidden></ul>
+    <p id="maintenance-banner" class="error" hidden>
+      Restock schedule unavailable — nightly maintenance window in progress.
+    </p>
+
+    <p class="hint"><a href="checkout.html">Back to your cart</a></p>
+  </div>
+  <p class="disclaimer">Seeded flakiness for demonstration — see the README.</p>
+</main>
+<script type="module">
+  import { fetchCatalog, maintenanceWindowActive, money } from './js/shop.js';
+
+  const list = document.getElementById('catalog-list');
+  const error = document.getElementById('catalog-error');
+  fetchCatalog().then((items) => {
+    list.innerHTML = items
+      .map((item) => `<li><span>${item.name}</span><span>${money(item.promoPrice)}</span></li>`)
+      .join('');
+    list.hidden = false;
+  }).catch((err) => {
+    error.textContent = err.message;
+    error.hidden = false;
+  });
+
+  const table = document.getElementById('restock-table');
+  const banner = document.getElementById('maintenance-banner');
+  if (maintenanceWindowActive()) {
+    banner.hidden = false;
+  } else {
+    table.innerHTML = `
+      <li><span>Aurora Keyboard</span><span>restocks Tuesday</span></li>
+      <li><span>Nimbus Mouse</span><span>restocks Friday</span></li>`;
+    table.hidden = false;
+  }
+</script>
+</body>
+</html>

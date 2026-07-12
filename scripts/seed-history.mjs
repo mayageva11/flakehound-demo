@@ -10,10 +10,14 @@
  * real Playwright suite emits.
  *
  * The backstory: on commit 5eed001 everything passed. Commit 5eed002 shipped
- * the promo-pricing change that introduced all three defects — the receipt
+ * the promo-pricing change that introduced the shop defects — the receipt
  * total broke deterministically (regression), while the checkout timeout and
- * the payment race began flipping (flaky). That is exactly what flakehound
- * should recover from these files.
+ * the payment race began flipping (flaky). The inventory page (and its catalog
+ * 502 / maintenance-window defects) appears on 2026-07-05. Both checkout and
+ * payment carry an intra-run retry flip in the seeds, so they classify as
+ * flaky/HIGH — which is what makes `flakehound quarantine` pick them up on the
+ * first pipeline run. The inventory tests start at MEDIUM confidence
+ * (cross-run flips only) and earn their verdicts live.
  */
 import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
@@ -25,18 +29,41 @@ const P = 'pass';
 const F = 'fail';
 const RF = 'retryflip'; // failed then passed WITHIN one run (two attempts) → retry flip
 
-// chronological backstory: [date, commitSha, { test: verdict }]
-// The 2026-07-04 checkout is a retry flip: attempt 1 times out, attempt 2 passes
-// in the same run. That is flakehound's highest-confidence flaky signal — it
-// makes `checkout` classify as flaky/HIGH from the seed alone, so the dashboard
-// shows a high-confidence chip immediately. Real CI runs (retries: 2) add more
-// of these over time; this is seed backstory, same as every other seed run.
+// chronological backstory: [timestamp, commitSha, { suite: { test: verdict } }]
+// Retry flips (RF) are flakehound's highest-confidence flaky signal:
+//   2026-07-04 checkout RF → checkout is flaky/HIGH from the seed alone.
+//   2026-07-05 payment  RF → payment is flaky/HIGH too — required for the
+//     quarantine → fix → auto-release story arc documented in the README.
+// Real CI runs (retries: 2) add more of these over time.
 const RUNS = [
-  ['2026-06-30T10:00:00Z', '5eed001', { login: P, checkout: P, payment: P, receipt: P }],
-  ['2026-07-01T10:00:00Z', '5eed001', { login: P, checkout: P, payment: P, receipt: P }],
-  ['2026-07-02T10:00:00Z', '5eed002', { login: P, checkout: P, payment: F, receipt: F }],
-  ['2026-07-03T10:00:00Z', '5eed002', { login: P, checkout: F, payment: P, receipt: F }],
-  ['2026-07-04T10:00:00Z', '5eed002', { login: P, checkout: RF, payment: F, receipt: F }],
+  ['2026-06-30T10:00:00Z', '5eed001', {
+    'shop.spec.ts': { login: P, checkout: P, payment: P, receipt: P },
+  }],
+  ['2026-07-01T10:00:00Z', '5eed001', {
+    'shop.spec.ts': { login: P, checkout: P, payment: P, receipt: P },
+  }],
+  ['2026-07-02T10:00:00Z', '5eed002', {
+    'shop.spec.ts': { login: P, checkout: P, payment: F, receipt: F },
+  }],
+  ['2026-07-03T10:00:00Z', '5eed002', {
+    'shop.spec.ts': { login: P, checkout: F, payment: P, receipt: F },
+  }],
+  ['2026-07-04T10:00:00Z', '5eed002', {
+    'shop.spec.ts': { login: P, checkout: RF, payment: F, receipt: F },
+  }],
+  // inventory.html ships here — its two tests join the history
+  ['2026-07-05T10:00:00Z', '5eed002', {
+    'shop.spec.ts': { login: P, checkout: P, payment: RF, receipt: F },
+    'inventory.spec.ts': { catalog: F, restock: P },
+  }],
+  ['2026-07-06T10:00:00Z', '5eed002', {
+    'shop.spec.ts': { login: P, checkout: F, payment: P, receipt: F },
+    'inventory.spec.ts': { catalog: P, restock: P },
+  }],
+  ['2026-07-06T18:00:00Z', '5eed002', {
+    'shop.spec.ts': { login: P, checkout: P, payment: P, receipt: F },
+    'inventory.spec.ts': { catalog: P, restock: F },
+  }],
 ];
 
 const CI = '/home/runner/work/flakehound-demo/flakehound-demo';
@@ -65,24 +92,44 @@ const FAILURE = {
       `    at ReceiptPage.verifyTotal (${CI}/tests/pages/receipt-page.ts:${line}:13)\n` +
       `    at ${CI}/tests/shop.spec.ts:54:18`,
   },
+  catalog: {
+    message: 'NetworkError: 502 Bad Gateway fetching /api/catalog',
+    stack: (line) =>
+      `NetworkError: 502 Bad Gateway fetching /api/catalog\n` +
+      `    at InventoryPage.expectCatalog (${CI}/tests/pages/inventory-page.ts:${line}:13)\n` +
+      `    at ${CI}/tests/inventory.spec.ts:19:3`,
+  },
+  restock: {
+    message: 'EnvironmentError: shop unavailable during maintenance window',
+    stack: (line) =>
+      `EnvironmentError: shop unavailable during maintenance window\n` +
+      `    at InventoryPage.expectRestockSchedule (${CI}/tests/pages/inventory-page.ts:${line}:13)\n` +
+      `    at ${CI}/tests/inventory.spec.ts:26:3`,
+  },
 };
 
-const ORDER = ['login', 'checkout', 'payment', 'receipt'];
-const DURATION = { login: '0.700', checkout: '20.000', payment: '1.200', receipt: '1.400' };
+const ORDER = {
+  'shop.spec.ts': ['login', 'checkout', 'payment', 'receipt'],
+  'inventory.spec.ts': ['catalog', 'restock'],
+};
+const DURATION = {
+  login: '0.700', checkout: '20.000', payment: '1.200', receipt: '1.400',
+  catalog: '0.450', restock: '0.320',
+};
 
 const attr = (s) =>
   s.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
 const text = (s) => s.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
 
-function passCase(name, timeSec = DURATION[name]) {
-  return `    <testcase name="${name}" classname="shop.spec.ts" time="${timeSec}"/>`;
+function passCase(suite, name, timeSec = DURATION[name]) {
+  return `    <testcase name="${name}" classname="${suite}" time="${timeSec}"/>`;
 }
 
-function failCase(name, lineSalt) {
+function failCase(suite, name, lineSalt) {
   const f = FAILURE[name];
   // vary the line number per run so normalization (:<N>) is exercised
   return (
-    `    <testcase name="${name}" classname="shop.spec.ts" time="${DURATION[name]}">\n` +
+    `    <testcase name="${name}" classname="${suite}" time="${DURATION[name]}">\n` +
     `      <failure message="${attr(f.message)}">${text(f.stack(30 + lineSalt))}</failure>\n` +
     `    </testcase>`
   );
@@ -91,33 +138,45 @@ function failCase(name, lineSalt) {
 // Returns one or more <testcase> strings for a test in a run. A retry flip emits
 // TWO: a failed first attempt and a passing second attempt (same name), which
 // flakehound groups into one execution → an intra-run retry flip.
-function testcaseXml(name, verdict, lineSalt) {
-  if (verdict === P) return [passCase(name)];
-  if (verdict === F) return [failCase(name, lineSalt)];
+function testcaseXml(suite, name, verdict, lineSalt) {
+  if (verdict === P) return [passCase(suite, name)];
+  if (verdict === F) return [failCase(suite, name, lineSalt)];
   // RF: fail-then-pass within the run
-  return [failCase(name, lineSalt), passCase(name, '3.000')];
+  return [failCase(suite, name, lineSalt), passCase(suite, name, '3.000')];
 }
 
-function runXml(verdicts, lineSalt) {
-  const cases = ORDER.flatMap((t) => testcaseXml(t, verdicts[t], lineSalt));
-  const failures = cases.filter((c) => c.includes('<failure')).length;
-  const body = cases.join('\n');
+function runXml(suiteVerdicts, lineSalt) {
+  // One <testsuite> per spec file, sorted by name — matching the live reporter.
+  const suiteBlocks = Object.keys(suiteVerdicts)
+    .sort()
+    .map((suite) => {
+      const verdicts = suiteVerdicts[suite];
+      const cases = ORDER[suite].flatMap((t) => testcaseXml(suite, t, verdicts[t], lineSalt));
+      const failures = cases.filter((c) => c.includes('<failure')).length;
+      const totalTime = cases.length * 2; // cosmetic
+      return (
+        `  <testsuite name="${suite}" tests="${cases.length}" failures="${failures}" time="${totalTime.toFixed(3)}">\n` +
+        `${cases.join('\n')}\n` +
+        `  </testsuite>`
+      );
+    })
+    .join('\n');
   return (
     `<?xml version="1.0" encoding="UTF-8"?>\n` +
     `<testsuites>\n` +
-    `  <testsuite name="shop.spec.ts" tests="${cases.length}" failures="${failures}" time="23.300">\n` +
-    `${body}\n` +
-    `  </testsuite>\n` +
+    `${suiteBlocks}\n` +
     `</testsuites>\n`
   );
 }
 
-for (const [timestamp, commitSha, verdicts] of RUNS) {
+for (const [timestamp, commitSha, suiteVerdicts] of RUNS) {
   const day = timestamp.slice(0, 10);
-  const dir = path.join(historyDir, `seed-${day}_${commitSha}`);
+  const hour = timestamp.slice(11, 13);
+  // Two seed runs can share a day (2026-07-06) — suffix the hour to keep dirs unique.
+  const dir = path.join(historyDir, `seed-${day}T${hour}_${commitSha}`);
   await mkdir(dir, { recursive: true });
   const lineSalt = Number(day.slice(-2));
-  await writeFile(path.join(dir, 'junit.xml'), runXml(verdicts, lineSalt), 'utf8');
+  await writeFile(path.join(dir, 'junit.xml'), runXml(suiteVerdicts, lineSalt), 'utf8');
   await writeFile(
     path.join(dir, 'junit.meta.json'),
     `${JSON.stringify({ commitSha, timestamp, runnerId: 'seed' }, null, 2)}\n`,
