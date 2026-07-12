@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="inventory.spec.ts" tests="2" failures="0" time="1.237">
+    <testcase name="catalog" classname="inventory.spec.ts" time="0.527"/>
+    <testcase name="restock" classname="inventory.spec.ts" time="0.710"/>
+  </testsuite>
+  <testsuite name="shop.spec.ts" tests="6" failures="3" time="21.357">
+    <testcase name="login" classname="shop.spec.ts" time="0.425"/>
+    <testcase name="payment" classname="shop.spec.ts" time="0.306"/>
+    <testcase name="receipt" classname="shop.spec.ts" time="0.662">
+      <failure message="AssertionError: expected receipt total to equal amount charged">AssertionError: expected receipt total to equal amount charged
+    at ReceiptPage.verifyTotal (/home/runner/work/flakehound-demo/flakehound-demo/tests/pages/receipt-page.ts:23:13)
+    at /home/runner/work/flakehound-demo/flakehound-demo/tests/shop.spec.ts:58:3</failure>
+    </testcase>
+    <testcase name="receipt" classname="shop.spec.ts" time="0.550">
+      <failure message="AssertionError: expected receipt total to equal amount charged">AssertionError: expected receipt total to equal amount charged
+    at ReceiptPage.verifyTotal (/home/runner/work/flakehound-demo/flakehound-demo/tests/pages/receipt-page.ts:23:13)
+    at /home/runner/work/flakehound-demo/flakehound-demo/tests/shop.spec.ts:58:3</failure>
+    </testcase>
+    <testcase name="receipt" classname="shop.spec.ts" time="0.521">
+      <failure message="AssertionError: expected receipt total to equal amount charged">AssertionError: expected receipt total to equal amount charged
+    at ReceiptPage.verifyTotal (/home/runner/work/flakehound-demo/flakehound-demo/tests/pages/receipt-page.ts:23:13)
+    at /home/runner/work/flakehound-demo/flakehound-demo/tests/shop.spec.ts:58:3</failure>
+    </testcase>
+    <testcase name="checkout" classname="shop.spec.ts" time="18.893"/>
+  </testsuite>
+</testsuites>
