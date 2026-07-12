@@ -122,11 +122,13 @@ flakehound's verdicts (config in [`flakehound.config.ts`](flakehound.config.ts))
   whole thing is dry-run-by-default when you run it yourself — this pipeline
   passes `--apply` explicitly.
 
-**The staged story arc:** once `payment` was quarantined and its issue filed,
-its underlying bug (defect 2, the promo race) gets fixed in the app. Five
-scheduled runs later flakehound releases it automatically — closed issue,
-un-tagged spec, empty progress bar — while `checkout` (whose bug stays planted)
-remains quarantined indefinitely. One caveat worth knowing: `checkout` passes
+**The staged story arc:** `payment` was quarantined on 2026-07-12
+([issue #2](https://github.com/mayageva11/flakehound-demo/issues/2)), and its
+underlying bug (defect 2, the promo race) was fixed in the app the same day.
+Five scheduled runs later flakehound releases it automatically — closed issue,
+un-tagged spec, empty progress bar — while `checkout`
+([issue #1](https://github.com/mayageva11/flakehound-demo/issues/1), whose bug
+stays planted) remains quarantined indefinitely. One caveat worth knowing: `checkout` passes
 ~57% of runs, so once in a while it can luck into 5 clean passes and get
 released — the next flip simply re-quarantines it with a fresh issue. The
 system is self-healing in both directions.

@@ -9,10 +9,10 @@
  *   BUG 1 (timeout flake)   — checkout.html: the pay button renders after a
  *                             random 0–35s delay, so a test with a fixed
  *                             render SLA sometimes times out waiting for it.
- *   BUG 2 (race flake)      — payment.html: the cart total is read from shared
- *                             pricing state that an async promo mutates; the
- *                             read races the promo, so the displayed total
- *                             occasionally disagrees with the charged amount.
+ *   BUG 2 (race flake)      — payment.html: the cart total raced an async
+ *                             promo markdown. FIXED 2026-07-12 after flakehound
+ *                             quarantined the `payment` test — the auto-release
+ *                             half of the demo's story arc (see issue #2).
  *   BUG 3 (regression)      — payment.html receipt: the receipt total is
  *                             computed from LIST prices, always ignoring the
  *                             promo, so it is CONSISTENTLY wrong. Deterministic,
@@ -73,29 +73,26 @@ export function scheduleSlowPayButton(button) {
   }, delayMs);
 }
 
-// ── BUG 2 + BUG 3: the racing cart total and the always-wrong receipt ──────
+// ── BUG 2 (FIXED) + BUG 3: the cart total and the always-wrong receipt ─────
 /**
  * Resolve the payment page's prices. Returns a Promise of { cartTotal, charged }.
  *
- * PLANTED DEFECT (race flake): `keyboardPrice` is shared mutable state. An async
- * promo marks it down after a random delay, and the cart-total source reads it
- * after its OWN random delay. The two race: if the read wins, the cart total
- * reflects the pre-promo LIST price and disagrees with the charged amount.
+ * BUG 2 — FIXED 2026-07-12. The defect: `keyboardPrice` was shared mutable
+ * state that an async promo mutated after a random delay while the cart-total
+ * source read it after its OWN random delay; when the read won the race, the
+ * cart total showed the pre-promo LIST price and disagreed with the charge.
+ * flakehound quarantined `shop.spec.ts > payment` for it (issue #2); with the
+ * race gone the test posts clean passes and flakehound will auto-release it
+ * after `stableRunsToRelease` consecutive stable runs — the second half of the
+ * demo's story arc. The fix: compute the total from the settled promo price,
+ * no shared state, no race.
  */
 export function resolvePricing() {
   const keyboard = CATALOG[0];
   const mouse = CATALOG[1];
-  let keyboardPrice = keyboard.listPrice; // shared mutable state — the race target
-
-  // async promo mutates shared state after a random delay
-  setTimeout(() => {
-    keyboardPrice = keyboard.promoPrice;
-  }, rand(250));
-
-  // the cart-total source reads shared state after its own random delay
   return new Promise((resolve) => {
     setTimeout(() => {
-      const cartTotal = keyboardPrice + mouse.promoPrice; // 108 (pre-promo) or 100 (post-promo)
+      const cartTotal = keyboard.promoPrice + mouse.promoPrice; // always 100 — matches the charge
       resolve({ cartTotal, charged: CHARGED_AMOUNT });
     }, rand(250));
   });
