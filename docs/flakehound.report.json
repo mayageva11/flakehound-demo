@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-07-12T18:59:08.878Z",
+  "generatedAt": "2026-07-12T19:02:51.684Z",
   "summary": {
     "filesParsed": 34,
     "testRuns": 219,
@@ -964,7 +964,11 @@
       ],
       "firstSeen": "2026-07-02T10:00:00.000Z",
       "lastSeen": "2026-07-05T10:00:00.000Z",
-      "occurrences": 3
+      "occurrences": 3,
+      "hypothesis": {
+        "category": "assertion",
+        "explanation": "The test is failing because the assertion in PaymentPage.verify is incorrect, causing it to fail consistently."
+      }
     },
     {
       "id": "3b3af73dc648",
@@ -974,7 +978,11 @@
       ],
       "firstSeen": "2026-07-02T10:00:00.000Z",
       "lastSeen": "2026-07-12T18:58:46.000Z",
-      "occurrences": 84
+      "occurrences": 84,
+      "hypothesis": {
+        "category": "assertion",
+        "explanation": "The failure is likely due to a mismatch between expected and actual receipt total values in the ReceiptPage verifyTotal method."
+      }
     },
     {
       "id": "ba1cf43bc33b",
@@ -984,7 +992,11 @@
       ],
       "firstSeen": "2026-07-06T18:00:00.000Z",
       "lastSeen": "2026-07-06T18:00:00.000Z",
-      "occurrences": 1
+      "occurrences": 1,
+      "hypothesis": {
+        "category": "environment",
+        "explanation": "The shop is unavailable during the specified maintenance window, causing test failures."
+      }
     },
     {
       "id": "2316e6573812",
@@ -994,7 +1006,11 @@
       ],
       "firstSeen": "2026-07-05T10:00:00.000Z",
       "lastSeen": "2026-07-05T10:00:00.000Z",
-      "occurrences": 1
+      "occurrences": 1,
+      "hypothesis": {
+        "category": "network",
+        "explanation": "Failing to properly handle a delayed response from a remote server causing the test to timeout."
+      }
     },
     {
       "id": "842e18d0a516",
@@ -1004,7 +1020,11 @@
       ],
       "firstSeen": "2026-07-03T10:00:00.000Z",
       "lastSeen": "2026-07-12T13:07:42.000Z",
-      "occurrences": 22
+      "occurrences": 22,
+      "hypothesis": {
+        "category": "timeout",
+        "explanation": "The test is waiting too long for a UI element to load before timing out."
+      }
     }
   ],
   "gate": {
