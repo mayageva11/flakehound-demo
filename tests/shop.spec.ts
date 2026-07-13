@@ -39,8 +39,7 @@ test('checkout', { tag: '@flakehound-quarantined' }, async ({ page }) => {
   await checkout.pay();
 });
 
-// flakehound-quarantined cluster=1c30043e05a6 issue=https://github.com/mayageva11/flakehound-demo/issues/2 — managed by 'flakehound quarantine', do not edit
-test('payment', { tag: '@flakehound-quarantined' }, async ({ page }) => {
+test('payment', async ({ page }) => {
   // BUG 2: the cart total races an async promo, so it occasionally disagrees
   // with the charged amount → intermittent flake.
   await signIn(page);
