@@ -1,11 +1,11 @@
 {
   "version": 1,
-  "generatedAt": "2026-07-13T14:22:58.560Z",
+  "generatedAt": "2026-07-13T19:18:42.758Z",
   "summary": {
-    "filesParsed": 38,
-    "testRuns": 274,
+    "filesParsed": 39,
+    "testRuns": 291,
     "metadataSources": {
-      "sidecar": 38,
+      "sidecar": 39,
       "dirname": 0,
       "mtime": 0
     },
@@ -78,6 +78,12 @@
           "commitSha": "c271fd2a0a7daf2d311ee8890c71890f345b876c",
           "verdict": "pass",
           "retryFlips": 0
+        },
+        {
+          "timestamp": "2026-07-13T19:18:15.000Z",
+          "commitSha": "9abd8621ca7d2cd5c49eee4d6b2864786d93b2f3",
+          "verdict": "pass",
+          "retryFlips": 0
         }
       ]
     },
@@ -147,15 +153,21 @@
           "commitSha": "c271fd2a0a7daf2d311ee8890c71890f345b876c",
           "verdict": "pass",
           "retryFlips": 0
+        },
+        {
+          "timestamp": "2026-07-13T19:18:15.000Z",
+          "commitSha": "9abd8621ca7d2cd5c49eee4d6b2864786d93b2f3",
+          "verdict": "pass",
+          "retryFlips": 0
         }
       ]
     },
     {
       "testId": "shipping.spec.ts > checkout delivery estimate",
       "flakinessScore": 0,
-      "classification": "insufficient-data",
-      "confidence": "low",
-      "reason": "only 2 scorable run(s) in the history window; 3 required to classify",
+      "classification": "stable",
+      "confidence": "high",
+      "reason": "failing in 100% of observed runs with no passing run in the history window — cannot determine a breaking commit; widen the window or check the test",
       "history": [
         {
           "timestamp": "2026-07-13T12:05:19.000Z",
@@ -166,6 +178,12 @@
         {
           "timestamp": "2026-07-13T14:22:06.000Z",
           "commitSha": "c271fd2a0a7daf2d311ee8890c71890f345b876c",
+          "verdict": "fail",
+          "retryFlips": 0
+        },
+        {
+          "timestamp": "2026-07-13T19:18:15.000Z",
+          "commitSha": "9abd8621ca7d2cd5c49eee4d6b2864786d93b2f3",
           "verdict": "fail",
           "retryFlips": 0
         }
@@ -174,9 +192,9 @@
     {
       "testId": "shipping.spec.ts > inventory delivery estimate",
       "flakinessScore": 0,
-      "classification": "insufficient-data",
-      "confidence": "low",
-      "reason": "only 2 scorable run(s) in the history window; 3 required to classify",
+      "classification": "stable",
+      "confidence": "high",
+      "reason": "failing in 100% of observed runs with no passing run in the history window — cannot determine a breaking commit; widen the window or check the test",
       "history": [
         {
           "timestamp": "2026-07-13T12:05:19.000Z",
@@ -187,6 +205,12 @@
         {
           "timestamp": "2026-07-13T14:22:06.000Z",
           "commitSha": "c271fd2a0a7daf2d311ee8890c71890f345b876c",
+          "verdict": "fail",
+          "retryFlips": 0
+        },
+        {
+          "timestamp": "2026-07-13T19:18:15.000Z",
+          "commitSha": "9abd8621ca7d2cd5c49eee4d6b2864786d93b2f3",
           "verdict": "fail",
           "retryFlips": 0
         }
@@ -195,9 +219,9 @@
     {
       "testId": "shipping.spec.ts > payment delivery estimate",
       "flakinessScore": 0,
-      "classification": "insufficient-data",
-      "confidence": "low",
-      "reason": "only 2 scorable run(s) in the history window; 3 required to classify",
+      "classification": "stable",
+      "confidence": "high",
+      "reason": "failing in 100% of observed runs with no passing run in the history window — cannot determine a breaking commit; widen the window or check the test",
       "history": [
         {
           "timestamp": "2026-07-13T12:05:19.000Z",
@@ -208,6 +232,12 @@
         {
           "timestamp": "2026-07-13T14:22:06.000Z",
           "commitSha": "c271fd2a0a7daf2d311ee8890c71890f345b876c",
+          "verdict": "fail",
+          "retryFlips": 0
+        },
+        {
+          "timestamp": "2026-07-13T19:18:15.000Z",
+          "commitSha": "9abd8621ca7d2cd5c49eee4d6b2864786d93b2f3",
           "verdict": "fail",
           "retryFlips": 0
         }
@@ -447,6 +477,12 @@
           "commitSha": "c271fd2a0a7daf2d311ee8890c71890f345b876c",
           "verdict": "pass",
           "retryFlips": 1
+        },
+        {
+          "timestamp": "2026-07-13T19:18:15.000Z",
+          "commitSha": "9abd8621ca7d2cd5c49eee4d6b2864786d93b2f3",
+          "verdict": "pass",
+          "retryFlips": 0
         }
       ]
     },
@@ -681,6 +717,12 @@
         {
           "timestamp": "2026-07-13T14:22:06.000Z",
           "commitSha": "c271fd2a0a7daf2d311ee8890c71890f345b876c",
+          "verdict": "pass",
+          "retryFlips": 0
+        },
+        {
+          "timestamp": "2026-07-13T19:18:15.000Z",
+          "commitSha": "9abd8621ca7d2cd5c49eee4d6b2864786d93b2f3",
           "verdict": "pass",
           "retryFlips": 0
         }
@@ -920,6 +962,12 @@
           "commitSha": "c271fd2a0a7daf2d311ee8890c71890f345b876c",
           "verdict": "pass",
           "retryFlips": 0
+        },
+        {
+          "timestamp": "2026-07-13T19:18:15.000Z",
+          "commitSha": "9abd8621ca7d2cd5c49eee4d6b2864786d93b2f3",
+          "verdict": "pass",
+          "retryFlips": 0
         }
       ]
     },
@@ -928,7 +976,7 @@
       "flakinessScore": 0,
       "classification": "regression",
       "confidence": "high",
-      "reason": "failing in 100% of the last 36 run(s) since commit 5eed002; passed before it",
+      "reason": "failing in 100% of the last 37 run(s) since commit 5eed002; passed before it",
       "brokenSinceSha": "5eed002",
       "history": [
         {
@@ -1158,6 +1206,12 @@
           "commitSha": "c271fd2a0a7daf2d311ee8890c71890f345b876c",
           "verdict": "fail",
           "retryFlips": 0
+        },
+        {
+          "timestamp": "2026-07-13T19:18:15.000Z",
+          "commitSha": "9abd8621ca7d2cd5c49eee4d6b2864786d93b2f3",
+          "verdict": "fail",
+          "retryFlips": 0
         }
       ]
     }
@@ -1180,8 +1234,8 @@
         "shop.spec.ts > receipt"
       ],
       "firstSeen": "2026-07-02T10:00:00.000Z",
-      "lastSeen": "2026-07-13T14:22:06.000Z",
-      "occurrences": 96
+      "lastSeen": "2026-07-13T19:18:15.000Z",
+      "occurrences": 99
     },
     {
       "id": "ba1cf43bc33b",
@@ -1212,8 +1266,8 @@
         "shipping.spec.ts > payment delivery estimate"
       ],
       "firstSeen": "2026-07-13T12:05:19.000Z",
-      "lastSeen": "2026-07-13T14:22:06.000Z",
-      "occurrences": 18
+      "lastSeen": "2026-07-13T19:18:15.000Z",
+      "occurrences": 27
     },
     {
       "id": "842e18d0a516",
