@@ -70,14 +70,10 @@ jobs:
         # docs/index.html is a generated artifact — the canonical dashboard
         # lives in the flakehound repo. Every run refetches it and injects the
         # demo config block, so design fixes upstream reach the demo without a
-        # manual copy. curl -f leaves the committed copy untouched on failure.
-        run: |
-          curl -fsSL \
-            https://raw.githubusercontent.com/mayageva11/flakehound/main/docs/index.html \
-            -o docs/index.html.tmp
-          sed 's|<head>|<head>\n<!-- flakehound-dashboard-config -->\n<script>window.FHCONFIG = { stableRuns: 5, mode: "demo" };</script>|' \
-            docs/index.html.tmp > docs/index.html
-          rm docs/index.html.tmp
+        # manual copy (sync-dashboard.yml is the instant lane for the same
+        # script). A failed fetch keeps the committed copy but must not sink
+        # the whole history run — hence the || true.
+        run: node scripts/sync-dashboard.mjs || true
 
       - name: Analyze the accumulated history with flakehound (--no-ai)
         # Exit 1 (a new regression was found) is informational for this demo —
