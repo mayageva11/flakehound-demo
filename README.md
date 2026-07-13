@@ -110,20 +110,13 @@ The CI gate fails **once** when a regression first appears (exit 1), then reads
 as *known* on subsequent runs (exit 0) — so the pipeline doesn't cry wolf every
 6 hours.
 
-The dashboard itself (`docs/index.html`) is a **generated artifact**: the
-canonical source lives in the flakehound repo, and every pipeline run
-re-fetches it with the demo config injected
-([`scripts/sync-dashboard.mjs`](scripts/sync-dashboard.mjs)). Dashboard
-changes don't have to wait for a scheduled run, though — the lightweight
-[`sync-dashboard.yml`](.github/workflows/sync-dashboard.yml) workflow
-refreshes it in seconds, triggered automatically when flakehound's dashboard
-changes (via `repository_dispatch` from its `notify-demo.yml`) or manually
-from the Actions tab. The automatic trigger needs a one-time setup: a
-fine-grained PAT with **Contents: read/write** on this repo, stored in the
-**flakehound** repo as the `DEMO_DISPATCH_TOKEN` secret — until then the
-manual button does the same job. One caveat when watching a deploy: GitHub Pages serves
-with a ~10-minute cache (`max-age=600`), so hard-refresh (Cmd+Shift+R) to see
-a fresh deploy sooner.
+The dashboard itself (`docs/index.html`) is **emitted by `flakehound analyze`**:
+the config sets `html: { output: 'docs/index.html' }`, so every run writes the
+dashboard — with the report embedded — straight into the Pages folder. That is
+exactly what any project gets from `npx flakehound analyze --html`; the
+dashboard ships inside the npm package, so its version always matches the CLI
+that produced the report. (When watching a deploy land, note GitHub Pages
+caches for ~10 minutes — hard-refresh to see it sooner.)
 
 ### 4 · Quarantine & auto-release — `flakehound quarantine --apply`
 

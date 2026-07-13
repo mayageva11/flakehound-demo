@@ -14,7 +14,7 @@
   "devDependencies": {
     "@playwright/test": "^1.49.0",
     "@types/node": "^22.15.0",
-    "flakehound": "^0.3.1",
+    "flakehound": "^0.4.0",
     "typescript": "^5.8.3"
   }
 }
