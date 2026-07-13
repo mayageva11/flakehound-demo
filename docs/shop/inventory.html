@@ -34,12 +34,22 @@
       Restock schedule unavailable — nightly maintenance window in progress.
     </p>
 
+    <!--
+      BUG 6 lives here too: the delivery estimate comes from
+      fetchShippingEstimate() in js/shop.js, which fails with a 503 on EVERY
+      call. The same widget is on checkout.html and payment.html — one root
+      cause, three failing tests, one flakehound cluster.
+    -->
+    <h2>Delivery</h2>
+    <p id="shipping-estimate" hidden></p>
+    <p id="shipping-error" class="error" hidden></p>
+
     <p class="hint"><a href="checkout.html">Back to your cart</a></p>
   </div>
   <p class="disclaimer">Seeded flakiness for demonstration — see the README.</p>
 </main>
 <script type="module">
-  import { fetchCatalog, maintenanceWindowActive, money } from './js/shop.js';
+  import { fetchCatalog, maintenanceWindowActive, money, renderShippingEstimate } from './js/shop.js';
 
   const list = document.getElementById('catalog-list');
   const error = document.getElementById('catalog-error');
@@ -63,6 +73,11 @@
       <li><span>Nimbus Mouse</span><span>restocks Friday</span></li>`;
     table.hidden = false;
   }
+
+  renderShippingEstimate(
+    document.getElementById('shipping-estimate'),
+    document.getElementById('shipping-error'),
+  );
 </script>
 </body>
 </html>

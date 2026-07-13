@@ -1,8 +1,8 @@
 /*
- * Flaky Shop — shared client logic and the FIVE intentionally-planted defects.
+ * Flaky Shop — shared client logic and the SIX intentionally-planted defects.
  *
  * ⚠️  READ ME FIRST — this file contains bugs ON PURPOSE.
- * This is a demonstration app for flakehound. Five defects are planted in the
+ * This is a demonstration app for flakehound. Six defects are planted in the
  * APPLICATION CODE (never in the tests) so that a Playwright suite running
  * against the live site produces a realistic mix of signals:
  *
@@ -25,6 +25,11 @@
  *                             a "maintenance window" covering the first 8
  *                             minutes of every UTC hour. Whether a CI run lands
  *                             inside it depends on scheduler jitter, not code.
+ *   BUG 6 (shared outage)   — inventory.html + checkout.html + payment.html:
+ *                             the shipping-estimate "API" fails with a 503 on
+ *                             EVERY call. One broken dependency surfaces on
+ *                             three pages, so three tests fail with the same
+ *                             trace — which flakehound folds into ONE cluster.
  *
  * Every planted defect is tagged `PLANTED DEFECT` in a comment below.
  */
@@ -138,4 +143,33 @@ export function fetchCatalog() {
  */
 export function maintenanceWindowActive(now = new Date()) {
   return now.getUTCMinutes() < 8;
+}
+
+// ── BUG 6: the shipping-estimate outage (inventory, checkout, payment) ─────
+/**
+ * PLANTED DEFECT (shared outage): the shipping-estimate "API" is down — every
+ * call fails with a 503. Deterministic, and the SAME broken dependency backs
+ * the delivery widget on three different pages, so three different tests fail
+ * with an identical error. flakehound's normalizer sees identical traces and
+ * folds them into a single failure cluster — the "many failing tests, one
+ * root cause" demonstration.
+ */
+export function fetchShippingEstimate() {
+  return new Promise((_resolve, reject) => {
+    setTimeout(() => {
+      reject(new Error('503 Service Unavailable fetching /api/shipping-estimate'));
+    }, rand(150));
+  });
+}
+
+/** Shared wiring for the delivery-estimate widget — used by all three pages,
+ *  so every surface of BUG 6 fails through this one code path. */
+export function renderShippingEstimate(estimateEl, errorEl) {
+  fetchShippingEstimate().then((estimate) => {
+    estimateEl.textContent = estimate;
+    estimateEl.hidden = false;
+  }).catch((err) => {
+    errorEl.textContent = err.message;
+    errorEl.hidden = false;
+  });
 }

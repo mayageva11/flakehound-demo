@@ -13,6 +13,14 @@
     <h1>Your cart</h1>
     <ul id="cart" class="cart"></ul>
     <div class="row total"><span>Subtotal</span><span id="cart-subtotal">—</span></div>
+    <!--
+      BUG 6 lives here too: the delivery estimate comes from
+      fetchShippingEstimate() in js/shop.js, which fails with a 503 on EVERY
+      call. The same widget is on inventory.html and payment.html — one root
+      cause, three failing tests, one flakehound cluster.
+    -->
+    <p id="shipping-estimate" hidden></p>
+    <p id="shipping-error" class="error" hidden></p>
     <p class="hint">The pay button boots asynchronously — it may take a moment to appear. Or <a href="inventory.html">browse the inventory</a> while you wait.</p>
     <!--
       BUG 1 lives here: #pay-button is revealed after a random 0–35s delay
@@ -24,7 +32,7 @@
   <p class="disclaimer">Seeded flakiness for demonstration — see the README.</p>
 </main>
 <script type="module">
-  import { CATALOG, LIST_TOTAL, money, requireSession, scheduleSlowPayButton } from './js/shop.js';
+  import { CATALOG, LIST_TOTAL, money, renderShippingEstimate, requireSession, scheduleSlowPayButton } from './js/shop.js';
   if (requireSession()) {
     const cart = document.getElementById('cart');
     cart.innerHTML = CATALOG
@@ -37,6 +45,11 @@
       location.href = 'payment.html';
     });
     scheduleSlowPayButton(payButton);
+
+    renderShippingEstimate(
+      document.getElementById('shipping-estimate'),
+      document.getElementById('shipping-error'),
+    );
   }
 </script>
 </body>

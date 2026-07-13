@@ -39,7 +39,7 @@ local-first enrichment, never the source of truth.
 ### 1 · The Flaky Shop — a real site with defects planted in the app
 
 A tiny `login → checkout → payment` storefront plus an inventory page (static,
-served from GitHub Pages at `/shop/`). Five defects are planted in the
+served from GitHub Pages at `/shop/`). Six defects are planted in the
 **application code** (`docs/shop/js/shop.js`), each tagged `PLANTED DEFECT`:
 
 | # | Defect | Where | Surfaces as |
@@ -49,15 +49,19 @@ served from GitHub Pages at `/shop/`). Five defects are planted in the
 | 3 | Receipt total sums **list prices**, always ignoring the promo | `payment.html` receipt | **regression** — deterministic, fails every run |
 | 4 | Catalog "API" call returns a simulated **502** on ~25% of loads | `inventory.html` | **network flake** — the catalog intermittently fails to render |
 | 5 | Restock schedule hides during a **maintenance window** (first 8 min of every UTC hour) | `inventory.html` | **environment flake** — whether a run fails depends on CI scheduling jitter, not code |
+| 6 | Shipping-estimate "API" returns a **503 on every call** | `inventory.html` + `checkout.html` + `payment.html` | **shared outage** — three tests fail with the same trace, folded into **one cluster** |
 
 Defects 1, 2 and 4 are genuinely non-deterministic; defect 3 is deterministic;
-defect 5 is deterministic *given the clock* but random *across scheduled runs* —
-together they exercise the full flaky/regression/confidence spectrum.
+defect 5 is deterministic *given the clock* but random *across scheduled runs*;
+defect 6 is deterministic and shared by **three** tests — the many-failing-tests,
+one-root-cause case. Together they exercise the full
+flaky/regression/confidence/clustering spectrum.
 
 ### 2 · The Playwright suite — exposes them, emits JUnit XML
 
-`tests/shop.spec.ts` and `tests/inventory.spec.ts` drive the live site through
-page objects that mirror the defects. Over repeated runs on the same commit:
+`tests/shop.spec.ts`, `tests/inventory.spec.ts` and `tests/shipping.spec.ts`
+drive the live site through page objects that mirror the defects. Over repeated
+runs on the same commit:
 
 ```
 shop.spec.ts      > login    → stable            (and on the criticalTests list)
@@ -66,7 +70,16 @@ shop.spec.ts      > payment  → flaky (HIGH)      defect 2 → QUARANTINED, the
 shop.spec.ts      > receipt  → regression        defect 3
 inventory.spec.ts > catalog  → flaky (medium→HIGH) defect 4 → quarantined organically once live retries flip
 inventory.spec.ts > restock  → flaky (medium)    defect 5 → NEVER quarantined — the confidence gate at work
+shipping.spec.ts  > inventory delivery estimate ┐
+shipping.spec.ts  > checkout delivery estimate  ├ defect 6 → three tests, ONE cluster = one bug
+shipping.spec.ts  > payment delivery estimate   ┘
 ```
+
+The three `shipping.spec.ts` tests fail on every run with a byte-identical
+error (`NetworkError: 503 Service Unavailable fetching /api/shipping-estimate`
+thrown from one shared page object), so flakehound's trace normalizer folds
+them into a **single failure cluster** — the dashboard shows one cluster
+affecting three tests, i.e. "fix one backend and three red tests go green."
 
 **Retries in CI** (`retries: 2`) are deliberate: when a flaky test fails then
 passes *within one run*, that intra-run retry flip is flakehound's

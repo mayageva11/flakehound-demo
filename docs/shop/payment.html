@@ -15,6 +15,15 @@
     <div class="row"><span>Cart total</span><span id="cart-total" data-amount="">—</span></div>
     <div class="row"><span>Amount to be charged</span><span id="charged-amount" data-amount="">—</span></div>
 
+    <!--
+      BUG 6 lives here too: the delivery estimate comes from
+      fetchShippingEstimate() in js/shop.js, which fails with a 503 on EVERY
+      call. The same widget is on inventory.html and checkout.html — one root
+      cause, three failing tests, one flakehound cluster.
+    -->
+    <p id="shipping-estimate" hidden></p>
+    <p id="shipping-error" class="error" hidden></p>
+
     <button id="pay-now" disabled>Pay now</button>
     <span id="pricing-ready" hidden></span>
 
@@ -33,7 +42,7 @@
   <p class="disclaimer">Seeded flakiness for demonstration — see the README.</p>
 </main>
 <script type="module">
-  import { money, receiptTotal, requireSession, resolvePricing } from './js/shop.js';
+  import { money, receiptTotal, renderShippingEstimate, requireSession, resolvePricing } from './js/shop.js';
   if (requireSession()) {
     const cartTotalEl = document.getElementById('cart-total');
     const chargedEl = document.getElementById('charged-amount');
@@ -57,6 +66,11 @@
       receiptEl.dataset.amount = String(total);
       document.getElementById('receipt').hidden = false;
     });
+
+    renderShippingEstimate(
+      document.getElementById('shipping-estimate'),
+      document.getElementById('shipping-error'),
+    );
   }
 </script>
 </body>
