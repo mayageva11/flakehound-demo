@@ -12,7 +12,8 @@ import { InventoryPage } from './pages/inventory-page.js';
  *             a live demonstration of the confidence gate)
  */
 
-test('catalog', async ({ page }) => {
+// flakehound-quarantined cluster=2316e6573812 issue=https://github.com/mayageva11/flakehound-demo/issues/11 — managed by 'flakehound quarantine', do not edit
+test('catalog', { tag: '@flakehound-quarantined' }, async ({ page }) => {
   // BUG 4: the catalog fetch 502s on ~25% of loads → intermittent network flake.
   const inventory = new InventoryPage(page);
   await inventory.goto();
