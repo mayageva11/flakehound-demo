@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-08-06T08:26:08.143Z",
+  "generatedAt": "2026-08-06T13:52:57.499Z",
   "summary": {
     "filesParsed": 89,
     "testRuns": 1320,
@@ -428,8 +428,8 @@
           "retryFlips": 0
         },
         {
-          "timestamp": "2026-08-06T08:25:43.000Z",
-          "commitSha": "17441a36b004516390b594e5c84641172a13a8f8",
+          "timestamp": "2026-08-06T13:52:35.000Z",
+          "commitSha": "a0c903be9aae46b87e4fcbd80639719cbca23454",
           "verdict": "pass",
           "retryFlips": 0
         }
@@ -850,8 +850,8 @@
           "retryFlips": 0
         },
         {
-          "timestamp": "2026-08-06T08:25:43.000Z",
-          "commitSha": "17441a36b004516390b594e5c84641172a13a8f8",
+          "timestamp": "2026-08-06T13:52:35.000Z",
+          "commitSha": "a0c903be9aae46b87e4fcbd80639719cbca23454",
           "verdict": "pass",
           "retryFlips": 0
         }
@@ -1231,8 +1231,8 @@
           "retryFlips": 0
         },
         {
-          "timestamp": "2026-08-06T08:25:43.000Z",
-          "commitSha": "17441a36b004516390b594e5c84641172a13a8f8",
+          "timestamp": "2026-08-06T13:52:35.000Z",
+          "commitSha": "a0c903be9aae46b87e4fcbd80639719cbca23454",
           "verdict": "fail",
           "retryFlips": 0
         }
@@ -1612,8 +1612,8 @@
           "retryFlips": 0
         },
         {
-          "timestamp": "2026-08-06T08:25:43.000Z",
-          "commitSha": "17441a36b004516390b594e5c84641172a13a8f8",
+          "timestamp": "2026-08-06T13:52:35.000Z",
+          "commitSha": "a0c903be9aae46b87e4fcbd80639719cbca23454",
           "verdict": "fail",
           "retryFlips": 0
         }
@@ -1993,8 +1993,8 @@
           "retryFlips": 0
         },
         {
-          "timestamp": "2026-08-06T08:25:43.000Z",
-          "commitSha": "17441a36b004516390b594e5c84641172a13a8f8",
+          "timestamp": "2026-08-06T13:52:35.000Z",
+          "commitSha": "a0c903be9aae46b87e4fcbd80639719cbca23454",
           "verdict": "fail",
           "retryFlips": 0
         }
@@ -2536,8 +2536,8 @@
           "retryFlips": 0
         },
         {
-          "timestamp": "2026-08-06T08:25:43.000Z",
-          "commitSha": "17441a36b004516390b594e5c84641172a13a8f8",
+          "timestamp": "2026-08-06T13:52:35.000Z",
+          "commitSha": "a0c903be9aae46b87e4fcbd80639719cbca23454",
           "verdict": "pass",
           "retryFlips": 0
         }
@@ -3078,8 +3078,8 @@
           "retryFlips": 0
         },
         {
-          "timestamp": "2026-08-06T08:25:43.000Z",
-          "commitSha": "17441a36b004516390b594e5c84641172a13a8f8",
+          "timestamp": "2026-08-06T13:52:35.000Z",
+          "commitSha": "a0c903be9aae46b87e4fcbd80639719cbca23454",
           "verdict": "pass",
           "retryFlips": 0
         }
@@ -3621,8 +3621,8 @@
           "retryFlips": 0
         },
         {
-          "timestamp": "2026-08-06T08:25:43.000Z",
-          "commitSha": "17441a36b004516390b594e5c84641172a13a8f8",
+          "timestamp": "2026-08-06T13:52:35.000Z",
+          "commitSha": "a0c903be9aae46b87e4fcbd80639719cbca23454",
           "verdict": "pass",
           "retryFlips": 0
         }
@@ -4165,8 +4165,8 @@
           "retryFlips": 0
         },
         {
-          "timestamp": "2026-08-06T08:25:43.000Z",
-          "commitSha": "17441a36b004516390b594e5c84641172a13a8f8",
+          "timestamp": "2026-08-06T13:52:35.000Z",
+          "commitSha": "a0c903be9aae46b87e4fcbd80639719cbca23454",
           "verdict": "fail",
           "retryFlips": 0
         }
@@ -4191,7 +4191,7 @@
         "shop.spec.ts > receipt"
       ],
       "firstSeen": "2026-07-02T10:00:00.000Z",
-      "lastSeen": "2026-08-06T08:25:43.000Z",
+      "lastSeen": "2026-08-06T13:52:35.000Z",
       "occurrences": 249
     },
     {
@@ -4223,7 +4223,7 @@
         "shipping.spec.ts > payment delivery estimate"
       ],
       "firstSeen": "2026-07-13T14:22:06.000Z",
-      "lastSeen": "2026-08-06T08:25:43.000Z",
+      "lastSeen": "2026-08-06T13:52:35.000Z",
       "occurrences": 558
     },
     {
@@ -4253,9 +4253,7 @@
     "knownRegressions": [
       "shop.spec.ts > receipt"
     ],
-    "resolvedRegressions": [
-      "shop.spec.ts > checkout"
-    ],
+    "resolvedRegressions": [],
     "newClusters": [],
     "knownClusters": [
       "1c30043e05a6",
