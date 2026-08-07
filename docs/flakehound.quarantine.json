@@ -2,6 +2,18 @@
   "version": 1,
   "quarantined": [
     {
+      "testId": "inventory.spec.ts > catalog",
+      "file": "tests/inventory.spec.ts",
+      "quarantinedAt": "2026-08-07T12:52:12.524Z",
+      "flakinessScore": 1,
+      "confidence": "high",
+      "clusterId": "2316e6573812",
+      "issue": {
+        "number": 26,
+        "url": "https://github.com/mayageva11/flakehound-demo/issues/26"
+      }
+    },
+    {
       "testId": "shop.spec.ts > checkout",
       "file": "tests/shop.spec.ts",
       "quarantinedAt": "2026-08-05T01:59:43.776Z",
