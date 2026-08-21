@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-08-21T06:37:14.896Z",
+  "generatedAt": "2026-08-21T12:35:53.713Z",
   "summary": {
     "filesParsed": 89,
     "testRuns": 1379,
@@ -464,8 +464,8 @@
           "retryFlips": 0
         },
         {
-          "timestamp": "2026-08-21T06:36:50.000Z",
-          "commitSha": "097da49a10474d9bf0b223596bc74a0b2a34e37b",
+          "timestamp": "2026-08-21T12:35:29.000Z",
+          "commitSha": "2c915045f4905598fbf66f6c4414062be17fe5cd",
           "verdict": "pass",
           "retryFlips": 0
         }
@@ -922,8 +922,8 @@
           "retryFlips": 0
         },
         {
-          "timestamp": "2026-08-21T06:36:50.000Z",
-          "commitSha": "097da49a10474d9bf0b223596bc74a0b2a34e37b",
+          "timestamp": "2026-08-21T12:35:29.000Z",
+          "commitSha": "2c915045f4905598fbf66f6c4414062be17fe5cd",
           "verdict": "pass",
           "retryFlips": 0
         }
@@ -1339,8 +1339,8 @@
           "retryFlips": 0
         },
         {
-          "timestamp": "2026-08-21T06:36:50.000Z",
-          "commitSha": "097da49a10474d9bf0b223596bc74a0b2a34e37b",
+          "timestamp": "2026-08-21T12:35:29.000Z",
+          "commitSha": "2c915045f4905598fbf66f6c4414062be17fe5cd",
           "verdict": "fail",
           "retryFlips": 0
         }
@@ -1756,8 +1756,8 @@
           "retryFlips": 0
         },
         {
-          "timestamp": "2026-08-21T06:36:50.000Z",
-          "commitSha": "097da49a10474d9bf0b223596bc74a0b2a34e37b",
+          "timestamp": "2026-08-21T12:35:29.000Z",
+          "commitSha": "2c915045f4905598fbf66f6c4414062be17fe5cd",
           "verdict": "fail",
           "retryFlips": 0
         }
@@ -2173,8 +2173,8 @@
           "retryFlips": 0
         },
         {
-          "timestamp": "2026-08-21T06:36:50.000Z",
-          "commitSha": "097da49a10474d9bf0b223596bc74a0b2a34e37b",
+          "timestamp": "2026-08-21T12:35:29.000Z",
+          "commitSha": "2c915045f4905598fbf66f6c4414062be17fe5cd",
           "verdict": "fail",
           "retryFlips": 0
         }
@@ -2716,8 +2716,8 @@
           "retryFlips": 1
         },
         {
-          "timestamp": "2026-08-21T06:36:50.000Z",
-          "commitSha": "097da49a10474d9bf0b223596bc74a0b2a34e37b",
+          "timestamp": "2026-08-21T12:35:29.000Z",
+          "commitSha": "2c915045f4905598fbf66f6c4414062be17fe5cd",
           "verdict": "pass",
           "retryFlips": 0
         }
@@ -3258,8 +3258,8 @@
           "retryFlips": 0
         },
         {
-          "timestamp": "2026-08-21T06:36:50.000Z",
-          "commitSha": "097da49a10474d9bf0b223596bc74a0b2a34e37b",
+          "timestamp": "2026-08-21T12:35:29.000Z",
+          "commitSha": "2c915045f4905598fbf66f6c4414062be17fe5cd",
           "verdict": "pass",
           "retryFlips": 0
         }
@@ -3801,8 +3801,8 @@
           "retryFlips": 0
         },
         {
-          "timestamp": "2026-08-21T06:36:50.000Z",
-          "commitSha": "097da49a10474d9bf0b223596bc74a0b2a34e37b",
+          "timestamp": "2026-08-21T12:35:29.000Z",
+          "commitSha": "2c915045f4905598fbf66f6c4414062be17fe5cd",
           "verdict": "pass",
           "retryFlips": 0
         }
@@ -4345,8 +4345,8 @@
           "retryFlips": 0
         },
         {
-          "timestamp": "2026-08-21T06:36:50.000Z",
-          "commitSha": "097da49a10474d9bf0b223596bc74a0b2a34e37b",
+          "timestamp": "2026-08-21T12:35:29.000Z",
+          "commitSha": "2c915045f4905598fbf66f6c4414062be17fe5cd",
           "verdict": "fail",
           "retryFlips": 0
         }
@@ -4371,7 +4371,7 @@
         "shop.spec.ts > receipt"
       ],
       "firstSeen": "2026-07-02T10:00:00.000Z",
-      "lastSeen": "2026-08-21T06:36:50.000Z",
+      "lastSeen": "2026-08-21T12:35:29.000Z",
       "occurrences": 249
     },
     {
@@ -4403,7 +4403,7 @@
         "shipping.spec.ts > payment delivery estimate"
       ],
       "firstSeen": "2026-07-13T14:22:06.000Z",
-      "lastSeen": "2026-08-21T06:36:50.000Z",
+      "lastSeen": "2026-08-21T12:35:29.000Z",
       "occurrences": 612
     },
     {
