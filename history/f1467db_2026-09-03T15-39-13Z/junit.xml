@@ -1,71 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testsuites>
-  <testsuite name="inventory.spec.ts" tests="2" failures="0" time="1.065">
-    <testcase name="restock" classname="inventory.spec.ts" time="0.435"/>
-    <testcase name="catalog" classname="inventory.spec.ts" time="0.630"/>
+  <testsuite name="inventory.spec.ts" tests="2" failures="0" time="0.875">
+    <testcase name="restock" classname="inventory.spec.ts" time="0.427"/>
+    <testcase name="catalog" classname="inventory.spec.ts" time="0.448"/>
   </testsuite>
-  <testsuite name="shipping.spec.ts" tests="9" failures="9" time="3.741">
-    <testcase name="inventory delivery estimate" classname="shipping.spec.ts" time="0.334">
-      <failure message="NetworkError: 503 Service Unavailable fetching /api/shipping-estimate">NetworkError: 503 Service Unavailable fetching /api/shipping-estimate
-    at ShippingSection.expectEstimate (/home/runner/work/flakehound-demo/flakehound-demo/tests/pages/shipping-section.ts:24:13)
-    at /home/runner/work/flakehound-demo/flakehound-demo/tests/shipping.spec.ts:29:3</failure>
-    </testcase>
-    <testcase name="checkout delivery estimate" classname="shipping.spec.ts" time="0.538">
+  <testsuite name="shipping.spec.ts" tests="9" failures="9" time="4.346">
+    <testcase name="checkout delivery estimate" classname="shipping.spec.ts" time="0.362">
       <failure message="NetworkError: 503 Service Unavailable fetching /api/shipping-estimate">NetworkError: 503 Service Unavailable fetching /api/shipping-estimate
     at ShippingSection.expectEstimate (/home/runner/work/flakehound-demo/flakehound-demo/tests/pages/shipping-section.ts:24:13)
     at /home/runner/work/flakehound-demo/flakehound-demo/tests/shipping.spec.ts:37:3</failure>
     </testcase>
-    <testcase name="inventory delivery estimate" classname="shipping.spec.ts" time="0.272">
+    <testcase name="inventory delivery estimate" classname="shipping.spec.ts" time="0.377">
       <failure message="NetworkError: 503 Service Unavailable fetching /api/shipping-estimate">NetworkError: 503 Service Unavailable fetching /api/shipping-estimate
     at ShippingSection.expectEstimate (/home/runner/work/flakehound-demo/flakehound-demo/tests/pages/shipping-section.ts:24:13)
     at /home/runner/work/flakehound-demo/flakehound-demo/tests/shipping.spec.ts:29:3</failure>
     </testcase>
-    <testcase name="checkout delivery estimate" classname="shipping.spec.ts" time="0.443">
-      <failure message="NetworkError: 503 Service Unavailable fetching /api/shipping-estimate">NetworkError: 503 Service Unavailable fetching /api/shipping-estimate
-    at ShippingSection.expectEstimate (/home/runner/work/flakehound-demo/flakehound-demo/tests/pages/shipping-section.ts:24:13)
-    at /home/runner/work/flakehound-demo/flakehound-demo/tests/shipping.spec.ts:37:3</failure>
-    </testcase>
-    <testcase name="inventory delivery estimate" classname="shipping.spec.ts" time="0.284">
+    <testcase name="inventory delivery estimate" classname="shipping.spec.ts" time="0.488">
       <failure message="NetworkError: 503 Service Unavailable fetching /api/shipping-estimate">NetworkError: 503 Service Unavailable fetching /api/shipping-estimate
     at ShippingSection.expectEstimate (/home/runner/work/flakehound-demo/flakehound-demo/tests/pages/shipping-section.ts:24:13)
     at /home/runner/work/flakehound-demo/flakehound-demo/tests/shipping.spec.ts:29:3</failure>
     </testcase>
-    <testcase name="checkout delivery estimate" classname="shipping.spec.ts" time="0.574">
+    <testcase name="checkout delivery estimate" classname="shipping.spec.ts" time="0.643">
       <failure message="NetworkError: 503 Service Unavailable fetching /api/shipping-estimate">NetworkError: 503 Service Unavailable fetching /api/shipping-estimate
     at ShippingSection.expectEstimate (/home/runner/work/flakehound-demo/flakehound-demo/tests/pages/shipping-section.ts:24:13)
     at /home/runner/work/flakehound-demo/flakehound-demo/tests/shipping.spec.ts:37:3</failure>
     </testcase>
-    <testcase name="payment delivery estimate" classname="shipping.spec.ts" time="0.429">
+    <testcase name="inventory delivery estimate" classname="shipping.spec.ts" time="0.437">
+      <failure message="NetworkError: 503 Service Unavailable fetching /api/shipping-estimate">NetworkError: 503 Service Unavailable fetching /api/shipping-estimate
+    at ShippingSection.expectEstimate (/home/runner/work/flakehound-demo/flakehound-demo/tests/pages/shipping-section.ts:24:13)
+    at /home/runner/work/flakehound-demo/flakehound-demo/tests/shipping.spec.ts:29:3</failure>
+    </testcase>
+    <testcase name="checkout delivery estimate" classname="shipping.spec.ts" time="0.516">
+      <failure message="NetworkError: 503 Service Unavailable fetching /api/shipping-estimate">NetworkError: 503 Service Unavailable fetching /api/shipping-estimate
+    at ShippingSection.expectEstimate (/home/runner/work/flakehound-demo/flakehound-demo/tests/pages/shipping-section.ts:24:13)
+    at /home/runner/work/flakehound-demo/flakehound-demo/tests/shipping.spec.ts:37:3</failure>
+    </testcase>
+    <testcase name="payment delivery estimate" classname="shipping.spec.ts" time="0.608">
       <failure message="NetworkError: 503 Service Unavailable fetching /api/shipping-estimate">NetworkError: 503 Service Unavailable fetching /api/shipping-estimate
     at ShippingSection.expectEstimate (/home/runner/work/flakehound-demo/flakehound-demo/tests/pages/shipping-section.ts:24:13)
     at /home/runner/work/flakehound-demo/flakehound-demo/tests/shipping.spec.ts:44:3</failure>
     </testcase>
-    <testcase name="payment delivery estimate" classname="shipping.spec.ts" time="0.497">
+    <testcase name="payment delivery estimate" classname="shipping.spec.ts" time="0.462">
       <failure message="NetworkError: 503 Service Unavailable fetching /api/shipping-estimate">NetworkError: 503 Service Unavailable fetching /api/shipping-estimate
     at ShippingSection.expectEstimate (/home/runner/work/flakehound-demo/flakehound-demo/tests/pages/shipping-section.ts:24:13)
     at /home/runner/work/flakehound-demo/flakehound-demo/tests/shipping.spec.ts:44:3</failure>
     </testcase>
-    <testcase name="payment delivery estimate" classname="shipping.spec.ts" time="0.370">
+    <testcase name="payment delivery estimate" classname="shipping.spec.ts" time="0.453">
       <failure message="NetworkError: 503 Service Unavailable fetching /api/shipping-estimate">NetworkError: 503 Service Unavailable fetching /api/shipping-estimate
     at ShippingSection.expectEstimate (/home/runner/work/flakehound-demo/flakehound-demo/tests/pages/shipping-section.ts:24:13)
     at /home/runner/work/flakehound-demo/flakehound-demo/tests/shipping.spec.ts:44:3</failure>
     </testcase>
   </testsuite>
-  <testsuite name="shop.spec.ts" tests="6" failures="3" time="5.704">
-    <testcase name="login" classname="shop.spec.ts" time="0.317"/>
-    <testcase name="payment" classname="shop.spec.ts" time="0.287"/>
-    <testcase name="receipt" classname="shop.spec.ts" time="0.294">
+  <testsuite name="shop.spec.ts" tests="6" failures="3" time="4.907">
+    <testcase name="login" classname="shop.spec.ts" time="0.410"/>
+    <testcase name="checkout" classname="shop.spec.ts" time="2.724"/>
+    <testcase name="receipt" classname="shop.spec.ts" time="0.317">
       <failure message="AssertionError: expected receipt total to equal amount charged">AssertionError: expected receipt total to equal amount charged
     at ReceiptPage.verifyTotal (/home/runner/work/flakehound-demo/flakehound-demo/tests/pages/receipt-page.ts:23:13)
     at /home/runner/work/flakehound-demo/flakehound-demo/tests/shop.spec.ts:58:3</failure>
     </testcase>
-    <testcase name="receipt" classname="shop.spec.ts" time="0.822">
+    <testcase name="payment" classname="shop.spec.ts" time="0.405"/>
+    <testcase name="receipt" classname="shop.spec.ts" time="0.352">
       <failure message="AssertionError: expected receipt total to equal amount charged">AssertionError: expected receipt total to equal amount charged
     at ReceiptPage.verifyTotal (/home/runner/work/flakehound-demo/flakehound-demo/tests/pages/receipt-page.ts:23:13)
     at /home/runner/work/flakehound-demo/flakehound-demo/tests/shop.spec.ts:58:3</failure>
     </testcase>
-    <testcase name="checkout" classname="shop.spec.ts" time="3.624"/>
-    <testcase name="receipt" classname="shop.spec.ts" time="0.360">
+    <testcase name="receipt" classname="shop.spec.ts" time="0.699">
       <failure message="AssertionError: expected receipt total to equal amount charged">AssertionError: expected receipt total to equal amount charged
     at ReceiptPage.verifyTotal (/home/runner/work/flakehound-demo/flakehound-demo/tests/pages/receipt-page.ts:23:13)
     at /home/runner/work/flakehound-demo/flakehound-demo/tests/shop.spec.ts:58:3</failure>
