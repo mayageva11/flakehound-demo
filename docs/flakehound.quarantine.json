@@ -2,6 +2,18 @@
   "version": 1,
   "quarantined": [
     {
+      "testId": "inventory.spec.ts > catalog",
+      "file": "tests/inventory.spec.ts",
+      "quarantinedAt": "2026-09-03T10:34:23.868Z",
+      "flakinessScore": 1,
+      "confidence": "high",
+      "clusterId": "2316e6573812",
+      "issue": {
+        "number": 34,
+        "url": "https://github.com/mayageva11/flakehound-demo/issues/34"
+      }
+    },
+    {
       "testId": "shop.spec.ts > checkout",
       "file": "tests/shop.spec.ts",
       "quarantinedAt": "2026-08-05T01:59:43.776Z",
@@ -11,6 +23,18 @@
       "issue": {
         "number": 23,
         "url": "https://github.com/mayageva11/flakehound-demo/issues/23"
+      }
+    },
+    {
+      "testId": "shop.spec.ts > payment",
+      "file": "tests/shop.spec.ts",
+      "quarantinedAt": "2026-09-03T10:34:24.457Z",
+      "flakinessScore": 0.7142857142857143,
+      "confidence": "high",
+      "clusterId": "1c30043e05a6",
+      "issue": {
+        "number": 35,
+        "url": "https://github.com/mayageva11/flakehound-demo/issues/35"
       }
     }
   ]
