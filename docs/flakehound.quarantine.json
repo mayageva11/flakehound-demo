@@ -24,6 +24,18 @@
         "number": 39,
         "url": "https://github.com/mayageva11/flakehound-demo/issues/39"
       }
+    },
+    {
+      "testId": "shop.spec.ts > payment",
+      "file": "tests/shop.spec.ts",
+      "quarantinedAt": "2026-09-25T16:21:02.520Z",
+      "flakinessScore": 0.875,
+      "confidence": "high",
+      "clusterId": "1c30043e05a6",
+      "issue": {
+        "number": 46,
+        "url": "https://github.com/mayageva11/flakehound-demo/issues/46"
+      }
     }
   ]
 }
