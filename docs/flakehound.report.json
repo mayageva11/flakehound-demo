@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-09-27T20:43:47.374Z",
+  "generatedAt": "2026-09-28T03:10:35.969Z",
   "summary": {
     "filesParsed": 89,
     "testRuns": 1432,
@@ -14,11 +14,10 @@
   "signals": [
     {
       "testId": "inventory.spec.ts > catalog",
-      "flakinessScore": 0,
-      "classification": "regression",
+      "flakinessScore": 0.9736842105263158,
+      "classification": "flaky",
       "confidence": "high",
-      "reason": "failing in 100% of the last 2 run(s) since commit f01a85105a49f7b6cd4f4d2659ba5b1535a79e95; passed before it",
-      "brokenSinceSha": "f01a85105a49f7b6cd4f4d2659ba5b1535a79e95",
+      "reason": "18 retry flip(s) within a single run; 1 pass↔fail transition(s) on the same commit",
       "history": [
         {
           "timestamp": "2026-07-05T10:00:00.000Z",
@@ -477,9 +476,9 @@
           "retryFlips": 0
         },
         {
-          "timestamp": "2026-09-27T20:43:25.000Z",
-          "commitSha": "0369224a8cff39567ab0e4883e32a562c16e2690",
-          "verdict": "fail",
+          "timestamp": "2026-09-28T03:09:39.000Z",
+          "commitSha": "0b0aa6749ac32fb18be7cd709c2bd2bd2b60d3bf",
+          "verdict": "pass",
           "retryFlips": 0
         }
       ]
@@ -947,8 +946,8 @@
           "retryFlips": 0
         },
         {
-          "timestamp": "2026-09-27T20:43:25.000Z",
-          "commitSha": "0369224a8cff39567ab0e4883e32a562c16e2690",
+          "timestamp": "2026-09-28T03:09:39.000Z",
+          "commitSha": "0b0aa6749ac32fb18be7cd709c2bd2bd2b60d3bf",
           "verdict": "pass",
           "retryFlips": 0
         }
@@ -1388,8 +1387,8 @@
           "retryFlips": 0
         },
         {
-          "timestamp": "2026-09-27T20:43:25.000Z",
-          "commitSha": "0369224a8cff39567ab0e4883e32a562c16e2690",
+          "timestamp": "2026-09-28T03:09:39.000Z",
+          "commitSha": "0b0aa6749ac32fb18be7cd709c2bd2bd2b60d3bf",
           "verdict": "fail",
           "retryFlips": 0
         }
@@ -1829,8 +1828,8 @@
           "retryFlips": 0
         },
         {
-          "timestamp": "2026-09-27T20:43:25.000Z",
-          "commitSha": "0369224a8cff39567ab0e4883e32a562c16e2690",
+          "timestamp": "2026-09-28T03:09:39.000Z",
+          "commitSha": "0b0aa6749ac32fb18be7cd709c2bd2bd2b60d3bf",
           "verdict": "fail",
           "retryFlips": 0
         }
@@ -2270,8 +2269,8 @@
           "retryFlips": 0
         },
         {
-          "timestamp": "2026-09-27T20:43:25.000Z",
-          "commitSha": "0369224a8cff39567ab0e4883e32a562c16e2690",
+          "timestamp": "2026-09-28T03:09:39.000Z",
+          "commitSha": "0b0aa6749ac32fb18be7cd709c2bd2bd2b60d3bf",
           "verdict": "fail",
           "retryFlips": 0
         }
@@ -2282,7 +2281,7 @@
       "flakinessScore": 1,
       "classification": "flaky",
       "confidence": "high",
-      "reason": "29 retry flip(s) within a single run; 4 pass↔fail transition(s) on the same commit",
+      "reason": "30 retry flip(s) within a single run; 4 pass↔fail transition(s) on the same commit",
       "history": [
         {
           "timestamp": "2026-06-30T10:00:00.000Z",
@@ -2813,10 +2812,10 @@
           "retryFlips": 0
         },
         {
-          "timestamp": "2026-09-27T20:43:25.000Z",
-          "commitSha": "0369224a8cff39567ab0e4883e32a562c16e2690",
+          "timestamp": "2026-09-28T03:09:39.000Z",
+          "commitSha": "0b0aa6749ac32fb18be7cd709c2bd2bd2b60d3bf",
           "verdict": "pass",
-          "retryFlips": 0
+          "retryFlips": 1
         }
       ]
     },
@@ -3355,8 +3354,8 @@
           "retryFlips": 0
         },
         {
-          "timestamp": "2026-09-27T20:43:25.000Z",
-          "commitSha": "0369224a8cff39567ab0e4883e32a562c16e2690",
+          "timestamp": "2026-09-28T03:09:39.000Z",
+          "commitSha": "0b0aa6749ac32fb18be7cd709c2bd2bd2b60d3bf",
           "verdict": "pass",
           "retryFlips": 0
         }
@@ -3898,8 +3897,8 @@
           "retryFlips": 0
         },
         {
-          "timestamp": "2026-09-27T20:43:25.000Z",
-          "commitSha": "0369224a8cff39567ab0e4883e32a562c16e2690",
+          "timestamp": "2026-09-28T03:09:39.000Z",
+          "commitSha": "0b0aa6749ac32fb18be7cd709c2bd2bd2b60d3bf",
           "verdict": "pass",
           "retryFlips": 0
         }
@@ -4442,8 +4441,8 @@
           "retryFlips": 0
         },
         {
-          "timestamp": "2026-09-27T20:43:25.000Z",
-          "commitSha": "0369224a8cff39567ab0e4883e32a562c16e2690",
+          "timestamp": "2026-09-28T03:09:39.000Z",
+          "commitSha": "0b0aa6749ac32fb18be7cd709c2bd2bd2b60d3bf",
           "verdict": "fail",
           "retryFlips": 0
         }
@@ -4468,7 +4467,7 @@
         "shop.spec.ts > receipt"
       ],
       "firstSeen": "2026-07-02T10:00:00.000Z",
-      "lastSeen": "2026-09-27T20:43:25.000Z",
+      "lastSeen": "2026-09-28T03:09:39.000Z",
       "occurrences": 249
     },
     {
@@ -4488,8 +4487,8 @@
         "inventory.spec.ts > catalog"
       ],
       "firstSeen": "2026-07-05T10:00:00.000Z",
-      "lastSeen": "2026-09-27T20:43:25.000Z",
-      "occurrences": 45
+      "lastSeen": "2026-09-27T11:13:58.000Z",
+      "occurrences": 42
     },
     {
       "id": "e91151c1ac4f",
@@ -4500,7 +4499,7 @@
         "shipping.spec.ts > payment delivery estimate"
       ],
       "firstSeen": "2026-07-13T14:22:06.000Z",
-      "lastSeen": "2026-09-27T20:43:25.000Z",
+      "lastSeen": "2026-09-28T03:09:39.000Z",
       "occurrences": 648
     },
     {
@@ -4510,19 +4509,19 @@
         "shop.spec.ts > checkout"
       ],
       "firstSeen": "2026-07-03T10:00:00.000Z",
-      "lastSeen": "2026-09-26T03:06:47.000Z",
-      "occurrences": 62
+      "lastSeen": "2026-09-28T03:09:39.000Z",
+      "occurrences": 64
     }
   ],
   "gate": {
     "baselineUsed": true,
-    "newRegressions": [
-      "inventory.spec.ts > catalog"
-    ],
+    "newRegressions": [],
     "knownRegressions": [
       "shop.spec.ts > receipt"
     ],
-    "resolvedRegressions": [],
+    "resolvedRegressions": [
+      "inventory.spec.ts > catalog"
+    ],
     "newClusters": [],
     "knownClusters": [
       "1c30043e05a6",
