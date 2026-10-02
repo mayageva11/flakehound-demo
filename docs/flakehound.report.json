@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "generatedAt": "2026-10-02T03:41:14.373Z",
+  "generatedAt": "2026-10-02T11:45:29.355Z",
   "summary": {
     "filesParsed": 89,
-    "testRuns": 1423,
+    "testRuns": 1421,
     "metadataSources": {
       "sidecar": 89,
       "dirname": 0,
@@ -14,7 +14,7 @@
   "signals": [
     {
       "testId": "inventory.spec.ts > catalog",
-      "flakinessScore": 0.9459459459459459,
+      "flakinessScore": 1,
       "classification": "flaky",
       "confidence": "high",
       "reason": "17 retry flip(s) within a single run; 1 pass↔fail transition(s) on the same commit",
@@ -203,12 +203,6 @@
           "timestamp": "2026-08-15T18:20:26.000Z",
           "commitSha": "f6fe0197b757841860b60e2002b765c8384361e6",
           "verdict": "pass",
-          "retryFlips": 0
-        },
-        {
-          "timestamp": "2026-08-16T00:58:19.000Z",
-          "commitSha": "c3be65b0c91cf7818010c95cd2450895afdb02c4",
-          "verdict": "fail",
           "retryFlips": 0
         },
         {
@@ -478,6 +472,12 @@
         {
           "timestamp": "2026-10-02T03:40:59.000Z",
           "commitSha": "f23f55f3410d487cbe8ae1b819bdbaaaa7ec2daa",
+          "verdict": "pass",
+          "retryFlips": 0
+        },
+        {
+          "timestamp": "2026-10-02T11:45:15.000Z",
+          "commitSha": "f91264c9acd801cb27b7015c618678037652d4f7",
           "verdict": "pass",
           "retryFlips": 0
         }
@@ -676,12 +676,6 @@
           "retryFlips": 0
         },
         {
-          "timestamp": "2026-08-16T00:58:19.000Z",
-          "commitSha": "c3be65b0c91cf7818010c95cd2450895afdb02c4",
-          "verdict": "pass",
-          "retryFlips": 0
-        },
-        {
           "timestamp": "2026-08-16T12:28:13.000Z",
           "commitSha": "f3326b52455f0dfedcc2f393a2979077ea6100b4",
           "verdict": "pass",
@@ -948,6 +942,12 @@
         {
           "timestamp": "2026-10-02T03:40:59.000Z",
           "commitSha": "f23f55f3410d487cbe8ae1b819bdbaaaa7ec2daa",
+          "verdict": "pass",
+          "retryFlips": 0
+        },
+        {
+          "timestamp": "2026-10-02T11:45:15.000Z",
+          "commitSha": "f91264c9acd801cb27b7015c618678037652d4f7",
           "verdict": "pass",
           "retryFlips": 0
         }
@@ -1117,12 +1117,6 @@
           "retryFlips": 0
         },
         {
-          "timestamp": "2026-08-16T00:58:19.000Z",
-          "commitSha": "c3be65b0c91cf7818010c95cd2450895afdb02c4",
-          "verdict": "fail",
-          "retryFlips": 0
-        },
-        {
           "timestamp": "2026-08-16T12:28:13.000Z",
           "commitSha": "f3326b52455f0dfedcc2f393a2979077ea6100b4",
           "verdict": "fail",
@@ -1389,6 +1383,12 @@
         {
           "timestamp": "2026-10-02T03:40:59.000Z",
           "commitSha": "f23f55f3410d487cbe8ae1b819bdbaaaa7ec2daa",
+          "verdict": "fail",
+          "retryFlips": 0
+        },
+        {
+          "timestamp": "2026-10-02T11:45:15.000Z",
+          "commitSha": "f91264c9acd801cb27b7015c618678037652d4f7",
           "verdict": "fail",
           "retryFlips": 0
         }
@@ -1558,12 +1558,6 @@
           "retryFlips": 0
         },
         {
-          "timestamp": "2026-08-16T00:58:19.000Z",
-          "commitSha": "c3be65b0c91cf7818010c95cd2450895afdb02c4",
-          "verdict": "fail",
-          "retryFlips": 0
-        },
-        {
           "timestamp": "2026-08-16T12:28:13.000Z",
           "commitSha": "f3326b52455f0dfedcc2f393a2979077ea6100b4",
           "verdict": "fail",
@@ -1830,6 +1824,12 @@
         {
           "timestamp": "2026-10-02T03:40:59.000Z",
           "commitSha": "f23f55f3410d487cbe8ae1b819bdbaaaa7ec2daa",
+          "verdict": "fail",
+          "retryFlips": 0
+        },
+        {
+          "timestamp": "2026-10-02T11:45:15.000Z",
+          "commitSha": "f91264c9acd801cb27b7015c618678037652d4f7",
           "verdict": "fail",
           "retryFlips": 0
         }
@@ -1999,12 +1999,6 @@
           "retryFlips": 0
         },
         {
-          "timestamp": "2026-08-16T00:58:19.000Z",
-          "commitSha": "c3be65b0c91cf7818010c95cd2450895afdb02c4",
-          "verdict": "fail",
-          "retryFlips": 0
-        },
-        {
           "timestamp": "2026-08-16T12:28:13.000Z",
           "commitSha": "f3326b52455f0dfedcc2f393a2979077ea6100b4",
           "verdict": "fail",
@@ -2271,6 +2265,12 @@
         {
           "timestamp": "2026-10-02T03:40:59.000Z",
           "commitSha": "f23f55f3410d487cbe8ae1b819bdbaaaa7ec2daa",
+          "verdict": "fail",
+          "retryFlips": 0
+        },
+        {
+          "timestamp": "2026-10-02T11:45:15.000Z",
+          "commitSha": "f91264c9acd801cb27b7015c618678037652d4f7",
           "verdict": "fail",
           "retryFlips": 0
         }
@@ -2542,12 +2542,6 @@
           "retryFlips": 0
         },
         {
-          "timestamp": "2026-08-16T00:58:19.000Z",
-          "commitSha": "c3be65b0c91cf7818010c95cd2450895afdb02c4",
-          "verdict": "pass",
-          "retryFlips": 0
-        },
-        {
           "timestamp": "2026-08-16T12:28:13.000Z",
           "commitSha": "f3326b52455f0dfedcc2f393a2979077ea6100b4",
           "verdict": "pass",
@@ -2814,6 +2808,12 @@
         {
           "timestamp": "2026-10-02T03:40:59.000Z",
           "commitSha": "f23f55f3410d487cbe8ae1b819bdbaaaa7ec2daa",
+          "verdict": "pass",
+          "retryFlips": 0
+        },
+        {
+          "timestamp": "2026-10-02T11:45:15.000Z",
+          "commitSha": "f91264c9acd801cb27b7015c618678037652d4f7",
           "verdict": "pass",
           "retryFlips": 0
         }
@@ -3084,12 +3084,6 @@
           "retryFlips": 0
         },
         {
-          "timestamp": "2026-08-16T00:58:19.000Z",
-          "commitSha": "c3be65b0c91cf7818010c95cd2450895afdb02c4",
-          "verdict": "pass",
-          "retryFlips": 0
-        },
-        {
           "timestamp": "2026-08-16T12:28:13.000Z",
           "commitSha": "f3326b52455f0dfedcc2f393a2979077ea6100b4",
           "verdict": "pass",
@@ -3356,6 +3350,12 @@
         {
           "timestamp": "2026-10-02T03:40:59.000Z",
           "commitSha": "f23f55f3410d487cbe8ae1b819bdbaaaa7ec2daa",
+          "verdict": "pass",
+          "retryFlips": 0
+        },
+        {
+          "timestamp": "2026-10-02T11:45:15.000Z",
+          "commitSha": "f91264c9acd801cb27b7015c618678037652d4f7",
           "verdict": "pass",
           "retryFlips": 0
         }
@@ -3627,12 +3627,6 @@
           "retryFlips": 0
         },
         {
-          "timestamp": "2026-08-16T00:58:19.000Z",
-          "commitSha": "c3be65b0c91cf7818010c95cd2450895afdb02c4",
-          "verdict": "pass",
-          "retryFlips": 0
-        },
-        {
           "timestamp": "2026-08-16T12:28:13.000Z",
           "commitSha": "f3326b52455f0dfedcc2f393a2979077ea6100b4",
           "verdict": "pass",
@@ -3899,6 +3893,12 @@
         {
           "timestamp": "2026-10-02T03:40:59.000Z",
           "commitSha": "f23f55f3410d487cbe8ae1b819bdbaaaa7ec2daa",
+          "verdict": "pass",
+          "retryFlips": 0
+        },
+        {
+          "timestamp": "2026-10-02T11:45:15.000Z",
+          "commitSha": "f91264c9acd801cb27b7015c618678037652d4f7",
           "verdict": "pass",
           "retryFlips": 0
         }
@@ -4171,12 +4171,6 @@
           "retryFlips": 0
         },
         {
-          "timestamp": "2026-08-16T00:58:19.000Z",
-          "commitSha": "c3be65b0c91cf7818010c95cd2450895afdb02c4",
-          "verdict": "fail",
-          "retryFlips": 0
-        },
-        {
           "timestamp": "2026-08-16T12:28:13.000Z",
           "commitSha": "f3326b52455f0dfedcc2f393a2979077ea6100b4",
           "verdict": "fail",
@@ -4445,6 +4439,12 @@
           "commitSha": "f23f55f3410d487cbe8ae1b819bdbaaaa7ec2daa",
           "verdict": "fail",
           "retryFlips": 0
+        },
+        {
+          "timestamp": "2026-10-02T11:45:15.000Z",
+          "commitSha": "f91264c9acd801cb27b7015c618678037652d4f7",
+          "verdict": "fail",
+          "retryFlips": 0
         }
       ]
     }
@@ -4467,7 +4467,7 @@
         "shop.spec.ts > receipt"
       ],
       "firstSeen": "2026-07-02T10:00:00.000Z",
-      "lastSeen": "2026-10-02T03:40:59.000Z",
+      "lastSeen": "2026-10-02T11:45:15.000Z",
       "occurrences": 249
     },
     {
@@ -4488,7 +4488,7 @@
       ],
       "firstSeen": "2026-07-05T10:00:00.000Z",
       "lastSeen": "2026-09-27T11:13:58.000Z",
-      "occurrences": 41
+      "occurrences": 38
     },
     {
       "id": "e91151c1ac4f",
@@ -4499,7 +4499,7 @@
         "shipping.spec.ts > payment delivery estimate"
       ],
       "firstSeen": "2026-07-15T01:55:29.000Z",
-      "lastSeen": "2026-10-02T03:40:59.000Z",
+      "lastSeen": "2026-10-02T11:45:15.000Z",
       "occurrences": 648
     },
     {
