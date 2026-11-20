@@ -14,18 +14,6 @@
       }
     },
     {
-      "testId": "shop.spec.ts > checkout",
-      "file": "tests/shop.spec.ts",
-      "quarantinedAt": "2026-10-24T15:16:20.409Z",
-      "flakinessScore": 1,
-      "confidence": "high",
-      "clusterId": "842e18d0a516",
-      "issue": {
-        "number": 54,
-        "url": "https://github.com/mayageva11/flakehound-demo/issues/54"
-      }
-    },
-    {
       "testId": "shop.spec.ts > payment",
       "file": "tests/shop.spec.ts",
       "quarantinedAt": "2026-11-14T04:37:25.605Z",
